@@ -6,6 +6,8 @@
 [build.environment]
   NODE_VERSION = "18.16.0"
   NPM_VERSION = "9.5.1"
+  WALLET_CONNECT_PROJECT_ID = "ce3c8945b428cc57f1c3c0945e0f8d13"
+  APP_DOMAIN = "javuro.com"
 
 [[redirects]]
   from = "/api/*"
