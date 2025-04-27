@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
 import { useWeb3 } from "@/lib/web3/context";
-import { WalletButton } from "@/components/ui/wallet-button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Menu } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Header() {
   const [location] = useLocation();
@@ -81,7 +80,50 @@ export default function Header() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <WalletButton />
+            {account ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="border-2 border-[#3A86FF] text-[#3A86FF] hover:bg-[#3A86FF]/10"
+                  >
+                    {`${account.slice(0, 6)}...${account.slice(-4)}`}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-80 p-4 bg-black/90 backdrop-blur-sm border-2 border-gray-800">
+                  <div className="flex flex-col gap-4">
+                    <div className="space-y-2">
+                      <h3 className="text-sm font-medium text-gray-400">
+                        Connected Wallet
+                      </h3>
+                      <p className="text-xs font-mono break-all text-white">
+                        {account}
+                      </p>
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="border-2 border-red-500 text-red-500 hover:bg-red-500/10"
+                      onClick={() => {
+                        disconnectWallet();
+                      }}
+                    >
+                      Disconnect
+                    </Button>
+                  </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button
+                size="sm"
+                className="bg-gradient-to-r from-[#3A86FF] to-[#3A86FF]/80"
+                onClick={() => connectWallet()}
+                disabled={isConnecting}
+              >
+                {isConnecting ? "Connecting..." : "Connect Wallet"}
+              </Button>
+            )}
           </div>
         </div>
       </div>
