@@ -25,7 +25,11 @@ declare global {
  */
 
 // WalletConnect Project ID - 환경 변수 또는 기본값 사용
-const WALLET_CONNECT_PROJECT_ID = import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID || "ce3c8945b428cc57f1c3c0945e0f8d13";
+const WALLET_CONNECT_PROJECT_ID = typeof window !== 'undefined' && window.WALLET_CONNECT_PROJECT_ID 
+  ? window.WALLET_CONNECT_PROJECT_ID 
+  : (typeof import.meta !== 'undefined' && import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID) 
+    ? import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID 
+    : "ce3c8945b428cc57f1c3c0945e0f8d13";
 
 // Configure chains
 const { chains, publicClient } = configureChains(
@@ -74,11 +78,13 @@ function getWagmiConfig() {
       
       // 클라이언트 사이드에서는 실제 URL 사용
       try {
+        const origin = window.location.origin;
+        console.log('Original URL:', `${origin}/docs/JAVURO%20Whitepaper%20EN%200.3.1.pdf`);
         return {
           name: 'JAVURO',
           description: 'JAVURO Web3 Application',
-          url: window.location.origin,
-          icons: [`${window.location.origin}/favicon.png`]
+          url: origin,
+          icons: [`${origin}/favicon.png`]
         };
       } catch (error) {
         console.error('Error creating metadata:', error);
@@ -96,6 +102,10 @@ function getWagmiConfig() {
     const metadata = getMetadata();
     console.log('WalletConnect metadata:', metadata);
     
+    // WebSocket URL for WalletConnect
+    const wsUrl = getWebSocketUrl();
+    console.log('Connecting to WebSocket server at:', wsUrl);
+    
     const walletConnectConnector = new WalletConnectConnector({
       chains,
       options: {
@@ -103,13 +113,13 @@ function getWagmiConfig() {
         showQrModal: true,
         qrModalOptions: {
           themeMode: 'dark',
-          qrModalTheme: {
-            borderRadius: {
-              primary: 'var(--radius)',
-              secondary: 'var(--radius)',
-              modal: 'var(--radius)',
-            },
-          },
+          themeVariables: {
+            '--wcm-z-index': '10000',  // 높은 z-index로 모달이 최상단에 표시되도록 함
+            '--wcm-background-color': '#000000',
+            '--wcm-accent-color': '#3A86FF',
+            '--wcm-accent-fill-color': '#FFFFFF',
+            '--wcm-background-border-radius': '8px'
+          }
         },
         metadata
       },
@@ -118,10 +128,7 @@ function getWagmiConfig() {
     wagmiConfig = createConfig({
       autoConnect: false,
       publicClient,
-      connectors: [
-        injectedConnector, 
-        walletConnectConnector
-      ],
+      connectors: [injectedConnector, walletConnectConnector],
     });
 
     return wagmiConfig;
@@ -129,6 +136,14 @@ function getWagmiConfig() {
     console.error('Failed to initialize wagmi config:', error);
     return null;
   }
+}
+
+// WebSocket URL 생성 함수
+function getWebSocketUrl() {
+  if (typeof window === 'undefined') return '';
+  
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  return `${protocol}//${window.location.host}/ws`;
 }
 
 interface Web3ContextType {
@@ -146,8 +161,43 @@ function Web3ContextProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
   const { address } = useAccount();
-  const { connect } = useConnect();
+  const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
+
+  // WebSocket 연결 설정
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    const wsUrl = getWebSocketUrl();
+    const socket = new WebSocket(wsUrl);
+    
+    socket.onopen = () => {
+      console.log('WebSocket connection established');
+      // 연결 정보 전송
+      socket.send(JSON.stringify({ 
+        type: 'connect', 
+        clientInfo: {
+          userAgent: navigator.userAgent,
+          url: window.location.href
+        }
+      }));
+    };
+    
+    socket.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        console.log('Received from server:', data);
+      } catch (error) {
+        console.error('Error parsing WebSocket message:', error);
+      }
+    };
+    
+    return () => {
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.close();
+      }
+    };
+  }, []);
 
   const clearWalletConnectSessions = () => {
     if (typeof window === 'undefined') return;
@@ -174,66 +224,69 @@ function Web3ContextProvider({ children }: { children: ReactNode }) {
       setError(null);
       clearWalletConnectSessions();
 
-      const config = getWagmiConfig();
-      if (!config) {
-        throw new Error('Failed to initialize wallet configuration');
-      }
+      // 모바일 장치 감지
+      const isMobile = typeof navigator !== 'undefined' && 
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      // Safari 브라우저 감지
+      const isSafari = typeof navigator !== 'undefined' &&
+        /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        
+      console.log(`Device: ${isMobile ? 'Mobile' : 'Desktop'}, Browser: ${isSafari ? 'Safari' : 'Other'}`);
 
-      // Try WalletConnect first for mobile devices
-      if (typeof navigator !== 'undefined' && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        const walletConnectConnector = config.connectors.find(
-          c => c instanceof WalletConnectConnector
-        );
+      // 사용 가능한 커넥터 가져오기
+      const availableConnectors = connectors.filter(c => c.ready);
+      const walletConnectConnector = availableConnectors.find(c => c.id === 'walletConnect');
+      const injectedConnector = availableConnectors.find(c => c.id === 'injected');
 
-        if (walletConnectConnector) {
-          try {
-            console.log('Attempting WalletConnect connection on mobile...');
-            await connect({ connector: walletConnectConnector });
-            return;
-          } catch (error: any) {
-            console.error('WalletConnect connection error:', error);
-            console.log('Falling back to MetaMask...');
+      // 모바일 및 Safari에서는 WalletConnect를 우선 사용
+      if ((isMobile || isSafari) && walletConnectConnector) {
+        try {
+          console.log('Attempting WalletConnect connection on mobile/Safari...');
+          await connect({ connector: walletConnectConnector });
+          return;
+        } catch (error) {
+          console.error('WalletConnect connection error:', error);
+          if (injectedConnector) {
+            console.log('Falling back to injected connector...');
+          } else {
+            throw error; // No fallback available
           }
         }
       }
 
-      // Try MetaMask
-      if (typeof window !== 'undefined' && window.ethereum) {
-        const injectedConnector = config.connectors.find(
-          c => c instanceof InjectedConnector
-        );
-
-        if (injectedConnector) {
-          try {
-            console.log('Attempting MetaMask connection...');
-            await connect({ connector: injectedConnector });
-            return;
-          } catch (error) {
-            console.log('MetaMask connection failed, trying WalletConnect...', error);
+      // 데스크톱에서는 MetaMask 등 injected provider 먼저 시도
+      if (injectedConnector && window.ethereum) {
+        try {
+          console.log('Attempting MetaMask connection...');
+          await connect({ connector: injectedConnector });
+          return;
+        } catch (error) {
+          console.log('Injected connector failed, trying WalletConnect...', error);
+          if (walletConnectConnector) {
+            console.log('Falling back to WalletConnect...');
+          } else {
+            throw error; // No fallback available
           }
         }
       }
 
-      // Fallback to WalletConnect
-      const walletConnectConnector = config.connectors.find(
-        c => c instanceof WalletConnectConnector
-      );
-
-      if (!walletConnectConnector) {
-        throw new Error('WalletConnect not initialized');
-      }
-
-      try {
-        console.log('Attempting WalletConnect connection...');
-        await connect({ connector: walletConnectConnector });
-      } catch (error: any) {
-        console.error('WalletConnect connection error details:', {
-          name: error.name,
-          message: error.message,
-          code: error.code,
-          stack: error.stack,
-        });
-        throw new Error('WalletConnect 연결에 실패했습니다. 다시 시도해주세요.');
+      // 최종 대안으로 WalletConnect 시도
+      if (walletConnectConnector) {
+        try {
+          console.log('Attempting WalletConnect connection...');
+          await connect({ connector: walletConnectConnector });
+        } catch (error: any) {
+          console.error('WalletConnect connection error details:', {
+            name: error.name,
+            message: error.message,
+            code: error.code,
+            stack: error.stack,
+          });
+          throw new Error('WalletConnect 연결에 실패했습니다. 다시 시도해주세요.');
+        }
+      } else {
+        throw new Error('지원되는 지갑 커넥터가 없습니다.');
       }
     } catch (err) {
       console.error('Wallet connection error:', err);
@@ -269,12 +322,12 @@ function Web3ContextProvider({ children }: { children: ReactNode }) {
 }
 
 export function Web3Provider({ children }: { children: ReactNode }) {
-  // Use useEffect to render the component only in browser environment
+  // useEffect를 사용하여 브라우저 환경에서만 컴포넌트를 렌더링
   const [config, setConfig] = useState<ReturnType<typeof createConfig> | null>(null);
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    // Initialize wagmi configuration only in browser environment
+    // 브라우저 환경에서만 wagmi 구성 초기화
     if (typeof window !== 'undefined') {
       const wagmiConfig = getWagmiConfig();
       setConfig(wagmiConfig);
@@ -282,17 +335,17 @@ export function Web3Provider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // Return empty div before initialization
+  // 초기화 전에는 빈 div 반환
   if (!initialized) {
     return <div style={{ display: 'none' }}></div>;
   }
 
-  // Display error if config is missing after initialization
+  // 초기화 후 config가 없으면 에러 표시
   if (!config) {
     console.error('Failed to initialize wagmi config');
     return (
       <div className="p-4 text-center text-red-500">
-        Unable to initialize wallet connection settings. Please refresh your browser or try a different browser.
+        지갑 연결 설정을 초기화할 수 없습니다. 브라우저를 새로고침하거나 다른 브라우저로 시도해주세요.
       </div>
     );
   }
