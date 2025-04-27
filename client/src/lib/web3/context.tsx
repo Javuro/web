@@ -4,6 +4,7 @@ import { bsc } from 'wagmi/chains';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
+import { contracts } from '@/lib/contracts';
 
 // ethereum 속성을 window 인터페이스에 추가
 declare global {
@@ -14,18 +15,20 @@ declare global {
 
 /**
  * WalletConnect QR 모달이 작동하지 않는 주요 원인:
- * 1. Replit 배포 환경에서 환경변수(import.meta.env)가 제대로 주입되지 않는 문제
+ * 1. 배포 환경에서 환경변수(import.meta.env)가 제대로 주입되지 않는 문제
  * 2. iframe 기반 QR 모달이 CSP(Content-Security-Policy) 정책에 해 차단되는 문제
  * 3. window 객체 접근 시점이 SSR과 충돌하는 문제
+ * 4. WebSocket 연결이 Netlify 서버리스 환경에서 작동하지 않는 문제
  * 
  * 해결 방안:
  * 1. projectId를 하드코딩하여 환경변수 의존성 제거
  * 2. index.html에 frame-src CSP 설정 추가
- * 3. typeof window 체크 후 WalletConnect 초기화
+ * 3. Netlify Functions API를 활용한 서버리스 방식 제공
+ * 4. 환경에 따른 적응형 연결 방식 제공
  */
 
-// WalletConnect Project ID - 환경 변수 또는 기본값 사용
-const WALLET_CONNECT_PROJECT_ID = import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID || "ce3c8945b428cc57f1c3c0945e0f8d13";
+// WalletConnect Project ID
+const WALLET_CONNECT_PROJECT_ID = "ce3c8945b428cc57f1c3c0945e0f8d13";
 
 // Configure chains
 const { chains, publicClient } = configureChains(
