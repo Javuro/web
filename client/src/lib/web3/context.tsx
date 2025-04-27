@@ -24,12 +24,8 @@ declare global {
  * 3. typeof window 체크 후 WalletConnect 초기화
  */
 
-// WalletConnect Project ID - 환경 변수 또는 기본값 사용
-const WALLET_CONNECT_PROJECT_ID = typeof window !== 'undefined' && window.WALLET_CONNECT_PROJECT_ID 
-  ? window.WALLET_CONNECT_PROJECT_ID 
-  : (typeof import.meta !== 'undefined' && import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID) 
-    ? import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID 
-    : "ce3c8945b428cc57f1c3c0945e0f8d13";
+// WalletConnect Project ID - 하드코딩하여 환경 변수 오류 방지
+const WALLET_CONNECT_PROJECT_ID = "ce3c8945b428cc57f1c3c0945e0f8d13";
 
 // Configure chains
 const { chains, publicClient } = configureChains(
@@ -168,32 +164,68 @@ function Web3ContextProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
-    const wsUrl = getWebSocketUrl();
-    const socket = new WebSocket(wsUrl);
+    let socket: WebSocket | null = null;
+    let reconnectAttempts = 0;
+    const maxReconnectAttempts = 5;
     
-    socket.onopen = () => {
-      console.log('WebSocket connection established');
-      // 연결 정보 전송
-      socket.send(JSON.stringify({ 
-        type: 'connect', 
-        clientInfo: {
-          userAgent: navigator.userAgent,
-          url: window.location.href
-        }
-      }));
-    };
-    
-    socket.onmessage = (event) => {
+    function setupWebSocket() {
       try {
-        const data = JSON.parse(event.data);
-        console.log('Received from server:', data);
+        const wsUrl = getWebSocketUrl();
+        console.log('연결 중인 WebSocket 서버:', wsUrl);
+        
+        socket = new WebSocket(wsUrl);
+        
+        socket.onopen = () => {
+          console.log('WebSocket 연결 성공');
+          reconnectAttempts = 0;
+          
+          // 연결 정보 전송
+          if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify({ 
+              type: 'connect', 
+              clientInfo: {
+                userAgent: navigator.userAgent,
+                url: window.location.href,
+                timestamp: new Date().toISOString()
+              }
+            }));
+          }
+        };
+        
+        socket.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            console.log('서버로부터 메시지 수신:', data);
+          } catch (error) {
+            console.error('WebSocket 메시지 파싱 오류:', error);
+          }
+        };
+        
+        socket.onerror = (error) => {
+          console.error('WebSocket 연결 오류:', error);
+        };
+        
+        socket.onclose = (event) => {
+          console.log(`WebSocket 연결 종료 (코드: ${event.code})`);
+          
+          // 재연결 시도
+          if (reconnectAttempts < maxReconnectAttempts) {
+            reconnectAttempts++;
+            console.log(`재연결 시도 ${reconnectAttempts}/${maxReconnectAttempts}`);
+            setTimeout(setupWebSocket, 3000);
+          } else {
+            console.error('최대 재연결 시도 횟수 초과. WebSocket 연결 중단.');
+          }
+        };
       } catch (error) {
-        console.error('Error parsing WebSocket message:', error);
+        console.error('WebSocket 초기화 오류:', error);
       }
-    };
+    }
+    
+    setupWebSocket();
     
     return () => {
-      if (socket.readyState === WebSocket.OPEN) {
+      if (socket && socket.readyState === WebSocket.OPEN) {
         socket.close();
       }
     };
@@ -211,6 +243,25 @@ function Web3ContextProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       console.error('Error clearing WalletConnect sessions:', err);
     }
+  };
+
+  // 직접 디바이스에 맞게 URL 핸들링하는 함수
+  const handleMobileWalletRedirect = async (uri: string) => {
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+    
+    // iOS
+    if (/iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream) {
+      // 사파리에서는 직접 딥링크 시도
+      window.location.href = uri;
+      return true;
+    } 
+    // Android
+    else if (/android/i.test(userAgent)) {
+      window.location.href = uri;
+      return true;
+    }
+    
+    return false; // 모바일이 아닌 경우
   };
 
   async function connectWallet() {
@@ -236,21 +287,35 @@ function Web3ContextProvider({ children }: { children: ReactNode }) {
 
       // 사용 가능한 커넥터 가져오기
       const availableConnectors = connectors.filter(c => c.ready);
-      const walletConnectConnector = availableConnectors.find(c => c.id === 'walletConnect');
+      const walletConnectConnector = availableConnectors.find(c => c.id === 'walletConnect') as WalletConnectConnector;
       const injectedConnector = availableConnectors.find(c => c.id === 'injected');
 
-      // 모바일 및 Safari에서는 WalletConnect를 우선 사용
+      // 모바일 또는 Safari에서는 WalletConnect 커스텀 연결 프로세스 사용
       if ((isMobile || isSafari) && walletConnectConnector) {
         try {
-          console.log('Attempting WalletConnect connection on mobile/Safari...');
-          await connect({ connector: walletConnectConnector });
+          console.log('모바일/Safari용 WalletConnect 연결 시도 중...');
+          
+          // 1. 먼저 일반적인 방법 시도
+          try {
+            await connect({ connector: walletConnectConnector });
+            return;
+          } catch (normalConnectError) {
+            console.log('표준 연결 실패, 대체 방법 시도 중:', normalConnectError);
+          }
+          
+          // 2. QR 코드 URL을 직접 리디렉트 페이지로 연결
+          if (typeof window !== 'undefined') {
+            const redirectUrl = `${window.location.origin}/wc-redirect.html`;
+            window.location.href = redirectUrl;
+          }
+          
           return;
         } catch (error) {
-          console.error('WalletConnect connection error:', error);
+          console.error('WalletConnect 연결 오류:', error);
           if (injectedConnector) {
-            console.log('Falling back to injected connector...');
+            console.log('주입된 커넥터로 대체 시도...');
           } else {
-            throw error; // No fallback available
+            throw error; // 대체 방법 없음
           }
         }
       }
@@ -258,15 +323,15 @@ function Web3ContextProvider({ children }: { children: ReactNode }) {
       // 데스크톱에서는 MetaMask 등 injected provider 먼저 시도
       if (injectedConnector && window.ethereum) {
         try {
-          console.log('Attempting MetaMask connection...');
+          console.log('MetaMask 연결 시도 중...');
           await connect({ connector: injectedConnector });
           return;
         } catch (error) {
-          console.log('Injected connector failed, trying WalletConnect...', error);
+          console.log('주입된 커넥터 실패, WalletConnect 시도 중...', error);
           if (walletConnectConnector) {
-            console.log('Falling back to WalletConnect...');
+            console.log('WalletConnect로 대체...');
           } else {
-            throw error; // No fallback available
+            throw error; // 대체 방법 없음
           }
         }
       }
@@ -274,10 +339,10 @@ function Web3ContextProvider({ children }: { children: ReactNode }) {
       // 최종 대안으로 WalletConnect 시도
       if (walletConnectConnector) {
         try {
-          console.log('Attempting WalletConnect connection...');
+          console.log('WalletConnect 연결 시도 중...');
           await connect({ connector: walletConnectConnector });
         } catch (error: any) {
-          console.error('WalletConnect connection error details:', {
+          console.error('WalletConnect 연결 오류 세부정보:', {
             name: error.name,
             message: error.message,
             code: error.code,
@@ -289,7 +354,7 @@ function Web3ContextProvider({ children }: { children: ReactNode }) {
         throw new Error('지원되는 지갑 커넥터가 없습니다.');
       }
     } catch (err) {
-      console.error('Wallet connection error:', err);
+      console.error('지갑 연결 오류:', err);
       setError(err instanceof Error ? err.message : '지갑 연결에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setIsConnecting(false);
