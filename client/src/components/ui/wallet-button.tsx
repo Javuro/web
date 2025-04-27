@@ -12,12 +12,13 @@ export function WalletButton({ className }: WalletButtonProps) {
   const [isMobileOrSafari, setIsMobileOrSafari] = useState(false);
   const [showPopupWallets, setShowPopupWallets] = useState(false);
 
-  // 모바일 또는 사파리 감지
+  // 모바일 또는 사파리 감지는 하지만 특별한 처리는 하지 않음
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-      setIsMobileOrSafari(isMobile || isSafari);
+      // 모든 환경에서 기본 WalletConnect를 사용하도록 false로 설정
+      setIsMobileOrSafari(false); 
     }
   }, []);
 
