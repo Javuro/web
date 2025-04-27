@@ -1,0 +1,48 @@
+name: Deploy to Netlify
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build project
+        run: |
+          VITE_WALLET_CONNECT_PROJECT_ID=ce3c8945b428cc57f1c3c0945e0f8d13 VITE_BUILD_TIME=$(date +%s) npm run build
+          
+      - name: Copy PDF files
+        run: |
+          mkdir -p dist/public/docs
+          if [ -d 'client/public/docs' ]; then
+            find client/public/docs -name '*.pdf' -exec cp -fv {} dist/public/docs/ \;
+          else
+            echo 'Warning: docs directory not found'
+          fi
+          
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v2.0
+        with:
+          publish-dir: './dist/public'
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+          enable-pull-request-comment: false
+          enable-commit-comment: false
+          enable-commit-status: true
+          overwrites-pull-request-comment: false
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 5

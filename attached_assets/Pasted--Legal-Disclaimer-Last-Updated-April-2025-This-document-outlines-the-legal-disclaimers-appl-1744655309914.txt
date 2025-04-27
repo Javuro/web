@@ -1,0 +1,72 @@
+# Legal Disclaimer  
+**Last Updated: April 2025**
+
+This document outlines the legal disclaimers applicable to the JAVURO project and the use of the JXRO token.  
+By accessing this website or referencing any materials related to JAVURO, you acknowledge and agree to the following:
+
+---
+
+## Quick Summary (Key Points)
+
+1. This document is for informational purposes only and does not constitute legal, financial, or investment advice.
+2. JXRO is a utility token and is not classified as a security, stock, or investment product.
+3. The project does not guarantee any value appreciation, returns, or income from holding the token.
+4. All token use and participation are subject to your local laws and your own responsibility.
+5. JAVURO is not liable for losses arising from technical failures, regulatory changes, or market conditions.
+6. Governance functions may be introduced in the future but hold no legal authority at this time.
+7. All future plans and projections are forward-looking and subject to change.
+8. Official information is only provided through designated channels.
+9. By using this information, you accept full responsibility for your actions.
+
+---
+
+## Full Legal Disclaimer
+
+The Whitepaper is provided for informational purposes only and does not constitute a binding agreement, investment solicitation, financial advice, legal counsel, or an offer to sell financial instruments in any jurisdiction.
+
+### 1. Legal Nature of the Token  
+JXRO is a digital utility token intended for use within the JAVURO platform. It is not considered legal tender, a security, equity share, bond, derivative, or investment product.  
+Ownership of JXRO does not grant rights to dividends, profit-sharing, voting, or any claim on the platform’s assets or operations.
+
+JXRO may be traded or exchanged on external platforms or marketplaces; however, such transactions occur outside the direct control of the project.  
+The legal treatment and applicability of such trading may vary depending on regional laws and are the sole responsibility of the user.
+
+### 2. Non-Binding and Subject to Change  
+All plans, metrics, projections, and roadmap items presented in this document are based on current assumptions and are subject to change without prior notice.  
+JAVURO does not guarantee the accuracy, completeness, or timeliness of any information contained herein.
+
+### 3. Limitation of Liability  
+Any decision made based on this document is the sole responsibility of the user.  
+JAVURO, its affiliates, team members, and associated entities shall not be held liable for direct, indirect, incidental, consequential, or any form of damages resulting from the use of this document or related materials.
+
+### 4. Regulatory Compliance  
+Users are responsible for ensuring that their use, acquisition, or trading of JXRO complies with the laws and regulations applicable in their jurisdiction.  
+JAVURO does not provide legal or tax advice and assumes no liability for users' compliance with applicable laws.
+
+### 5. Risk Disclosure  
+JXRO and the JAVURO platform are subject to various risks, including but not limited to:
+- Smart contract bugs or vulnerabilities  
+- Blockchain network instability or high transaction costs  
+- Cybersecurity threats including hacks and phishing  
+- Regulatory and policy changes  
+- Development delays or technical failures  
+- Market volatility or liquidity issues  
+Users must fully understand and accept these risks before engaging with the project.
+
+### 6. Governance and DAO Disclaimer  
+While the project may introduce decentralized governance (DAO) features in the future,  
+such features are currently experimental and do not constitute a legal body or decision-making authority.  
+Voting, proposals, and participation within the community may be encouraged but remain non-binding.
+
+### 7. Forward-Looking Statements  
+This document may include projections or statements about future plans, products, or outcomes.  
+These statements are based on assumptions and may differ significantly from actual results.  
+No representation or warranty is made regarding their realization.
+
+### 8. Official Sources  
+Only official channels (e.g., the project’s website and authenticated community accounts) provide verified information.  
+JAVURO assumes no responsibility for unofficial statements, rumors, or third-party commentary.
+
+### 9. Acceptance of Terms  
+By accessing or using the information contained in this document or the project’s platform,  
+you acknowledge that you have read, understood, and accepted the terms of this disclaimer, and that you are solely responsible for your actions.

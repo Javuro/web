@@ -1,0 +1,37 @@
+Privacy Policy
+1. Purpose
+This Privacy Policy sets forth the standards and procedures by which JAVURO (JXRO) (the “Service”) collects, uses, stores, and discloses personal information in connection with its operations. The Company is committed to protecting your personal information in accordance with applicable laws while maintaining efficient service operations.
+2. Collection of Personal Information and Methods
+1. Information Collected:
+    * During Membership Registration: Name, email, phone number, username, password, etc.
+    * During Service Usage: Access logs, IP address, cookies, device information, location data, etc.
+    * Others: Information collected via events, customer inquiries, or other interactions during the provision of the Service.
+2. Methods of Collection:
+    * Information is gathered through various channels such as the web/mobile application, customer service, and events, either via direct input or automatic collection.
+3. Purpose of Using Personal Information
+The Company uses the collected personal information for the following purposes:
+* Service Provision and Operation: Managing memberships, authentication, and delivering personalized content and recommendations.
+* Customer Support: Handling inquiries and complaints, providing customer assistance, and improving the Service.
+* Statistics and Analysis: Analyzing usage patterns, conducting marketing and promotional activities, and developing new services.
+* Legal Compliance: Fulfilling legal obligations, maintaining records as required by law, and resolving disputes.
+4. Retention and Use of Personal Information
+1. Personal information is retained until the purpose for which it was collected is achieved or until the retention period prescribed by applicable law expires.
+2. Upon achieving the purpose or expiration of the retention period, the Company will securely dispose of the personal information within a reasonable period in accordance with applicable laws.
+3. Notwithstanding the above, certain information may be retained for legally mandated periods (e.g., for e-commerce records or tax purposes).
+5. Disclosure of Personal Information to Third Parties
+1. The Company does not generally provide personal information to third parties.
+2. However, personal information may be disclosed under the following circumstances, subject to obtaining prior consent from the Member or as required by law:
+    * When prior consent has been obtained from the Member.
+    * In response to lawful requests from investigative agencies or as required by applicable laws.
+    * To essential partner companies for the purpose of providing the Service, with the Member’s consent.
+6. Safe Management and Protective Measures for Personal Information
+1. The Company employs advanced security technologies and robust internal management systems to prevent unauthorized access, disclosure, alteration, or destruction of personal information.
+2. Access to personal information is strictly limited to authorized personnel who undergo regular security training, and the Company continually monitors and updates its security measures.
+7. Rights of Members and How to Exercise Them
+1. Members have the right to request access to, correction, deletion, or suspension of the processing of their personal information at any time.
+2. Such requests may be submitted via the “My Information” section within the Service or by contacting customer support. The Company will process these requests promptly and diligently in accordance with applicable laws.
+3. However, if certain information is essential for the proper operation of the Service, some limitations may apply.
+8. Changes to the Privacy Policy
+1. The Company may modify this Privacy Policy as necessary in accordance with applicable laws and its internal policies. Any changes will be communicated to Members via Service announcements or individual notifications.
+2. The revised policy will take effect immediately upon notification, and continued use of the Service will be deemed acceptance of the updated Privacy Policy.
+
