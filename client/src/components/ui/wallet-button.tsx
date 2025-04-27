@@ -12,13 +12,12 @@ export function WalletButton({ className }: WalletButtonProps) {
   const [isMobileOrSafari, setIsMobileOrSafari] = useState(false);
   const [showPopupWallets, setShowPopupWallets] = useState(false);
 
-  // 모바일 또는 사파리 감지는 하지만 특별한 처리는 하지 않음
+  // 모바일 또는 사파리 감지
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-      // 모든 환경에서 기본 WalletConnect를 사용하도록 false로 설정
-      setIsMobileOrSafari(false); 
+      setIsMobileOrSafari(isMobile || isSafari);
     }
   }, []);
 
@@ -32,16 +31,17 @@ export function WalletButton({ className }: WalletButtonProps) {
   const openWalletApp = (walletType: string) => {
     try {
       let deepLink = '';
+      const javuroDomain = 'javuro.com';
       
       switch(walletType) {
         case 'metamask':
-          deepLink = 'https://metamask.app.link/dapp/' + window.location.host;
+          deepLink = 'https://metamask.app.link/dapp/' + javuroDomain;
           break;
         case 'trustwallet':
-          deepLink = 'https://link.trustwallet.com/open_url?url=' + encodeURIComponent(window.location.href);
+          deepLink = 'https://link.trustwallet.com/open_url?url=' + encodeURIComponent('https://' + javuroDomain);
           break;
         case 'imtoken':
-          deepLink = 'imtokenv2://browserview?url=' + encodeURIComponent(window.location.href);
+          deepLink = 'imtokenv2://browserview?url=' + encodeURIComponent('https://' + javuroDomain);
           break;
         default:
           // 기본적으로 일반 연결 시도

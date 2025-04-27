@@ -62,34 +62,13 @@ function getWagmiConfig() {
 
     // 현재 URL과 favicon URL을 안전하게 가져오는 함수
     const getMetadata = () => {
-      if (typeof window === 'undefined') {
-        // 서버 사이드에서는 기본값 사용
-        return {
-          name: 'JAVURO',
-          description: 'JAVURO Web3 Application',
-          url: 'https://javuro.com',
-          icons: ['https://javuro.com/favicon.png']
-        };
-      }
-      
-      // 클라이언트 사이드에서는 실제 URL 사용
-      try {
-        return {
-          name: 'JAVURO',
-          description: 'JAVURO Web3 Application',
-          url: window.location.origin,
-          icons: [`${window.location.origin}/favicon.png`]
-        };
-      } catch (error) {
-        console.error('Error creating metadata:', error);
-        // 오류 발생 시 대체 값 사용
-        return {
-          name: 'JAVURO',
-          description: 'JAVURO Web3 Application',
-          url: 'https://javuro.com',
-          icons: ['https://javuro.com/favicon.png']
-        };
-      }
+      // 항상 javuro.com 도메인 사용
+      return {
+        name: 'JAVURO',
+        description: 'JAVURO Web3 Application',
+        url: 'https://javuro.com',
+        icons: ['https://javuro.com/favicon.png']
+      };
     };
 
     // Initialize WalletConnect connector with dynamic metadata
@@ -101,6 +80,16 @@ function getWagmiConfig() {
       options: {
         projectId: WALLET_CONNECT_PROJECT_ID,
         showQrModal: true,
+        qrModalOptions: {
+          themeMode: 'dark',
+          qrModalTheme: {
+            borderRadius: {
+              primary: 'var(--radius)',
+              secondary: 'var(--radius)',
+              modal: 'var(--radius)',
+            },
+          },
+        },
         metadata
       },
     });
