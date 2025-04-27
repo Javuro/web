@@ -1,0 +1,46 @@
+[build]
+  command = "npm run build"
+  publish = "dist/public"
+  functions = "functions"
+
+[build.environment]
+  NODE_VERSION = "18.16.0"
+  NPM_VERSION = "9.5.1"
+  WALLET_CONNECT_PROJECT_ID = "ce3c8945b428cc57f1c3c0945e0f8d13"
+  APP_DOMAIN = "javuro.com"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/wallet-connect/*"
+  to = "/.netlify/functions/wallet-connect/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/ws"
+  to = "/.netlify/functions/wallet-connect"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[headers]
+  for = "/*"
+    [headers.values]
+    # Cache Control settings
+    cache-control = '''
+    max-age=0,
+    no-cache,
+    no-store,
+    must-revalidate'''
+
+# Removed NextJS plugin as it's not needed for this project
