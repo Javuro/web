@@ -1,0 +1,51 @@
+{
+  "common": {
+    "home": "Home",
+    "about": "About",
+    "token": "Token",
+    "rewards": "Rewards",
+    "mypage": "My Page",
+    "connectWallet": "Connect Wallet",
+    "connecting": "Connecting..."
+  },
+  "hero": {
+    "title": "Your Instant Journey. JAVURO.",
+    "subtitle": "A revolutionary Web3 ecosystem with real-time location-based recommendations, community voting, and innovative token economics",
+    "downloadApp": "Download App",
+    "joinCommunity": "Join Community",
+    "viewToken": "View JXRO Token"
+  },
+  "features": {
+    "title": "Core Features",
+    "location": {
+      "title": "Real-time Location Based",
+      "description": "Automatic recommendations for restaurants, cafes, and events within 500m-1km"
+    },
+    "chat": {
+      "title": "Auto Group Chat",
+      "description": "Instant communication channels created upon arrival at recommended locations"
+    },
+    "curation": {
+      "title": "Dual Curation",
+      "description": "Personalized content through AI and human curators"
+    },
+    "community": {
+      "title": "Community-Driven Locations",
+      "description": "Areas and events determined by user votes and feedback"
+    },
+    "token": {
+      "title": "Hybrid Token (JXRO)",
+      "description": "Supports rewards, premium payments, staking, and governance participation"
+    }
+  },
+  "brandStory": {
+    "title": "Brand Story",
+    "subtitle": "Connecting Spontaneous Journeys with Web3 Innovation",
+    "description1": "JAVURO is an innovative platform designed to provide users with spontaneous and enjoyable experiences anytime, anywhere. By combining real-time location-based technology with Web3 token economics, we offer users a new dimension of experience.",
+    "description2": "Beyond simple recommendations, we're creating richer and more meaningful experiences through community participation and token rewards."
+  },
+  "language": {
+    "ko": "한국어",
+    "en": "English"
+  }
+}

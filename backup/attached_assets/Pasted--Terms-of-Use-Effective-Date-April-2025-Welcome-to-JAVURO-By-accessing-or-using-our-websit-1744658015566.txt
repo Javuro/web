@@ -1,0 +1,91 @@
+# Terms of Use  
+**Effective Date:** April 2025
+
+Welcome to JAVURO. By accessing or using our website, platform, or any related services, you agree to be bound by the following terms and conditions (“Terms”).
+
+---
+
+## 1. Definitions
+
+- **“Platform”** refers to the JAVURO website (https://javuro.com), applications, and all related services.
+- **“User”** refers to any individual or entity accessing or using the Platform.
+- **“JXRO”** refers to the utility token issued for functional use within the JAVURO ecosystem.
+- **“Content”** means all information, text, images, data, and other materials published on or through the Platform.
+
+---
+
+## 2. Use of the Platform
+
+- Users must be at least 18 years old or of legal age in their jurisdiction.
+- Use of the Platform is at your own risk and discretion.
+- You agree not to use the Platform for unlawful, fraudulent, or malicious purposes, or to violate applicable laws and regulations.
+
+---
+
+## 3. Intellectual Property
+
+- All trademarks, content, and proprietary materials are owned or licensed by JAVURO.
+- Users may not copy, reproduce, distribute, or use any content without prior written consent, unless expressly permitted by law.
+
+---
+
+## 4. No Financial or Legal Advice
+
+- Information provided on the Platform is for general informational purposes only.
+- Nothing on the Platform constitutes legal, investment, financial, or tax advice.
+- You are solely responsible for your own decisions and actions.
+
+---
+
+## 5. Token Disclaimer
+
+- JXRO is a digital utility token intended for platform-related functionality only.
+- It does not represent ownership, equity, profit rights, or claims against JAVURO.
+- The use or trading of JXRO may be subject to regional laws. Users must ensure compliance with local regulations.
+- JAVURO makes no guarantees regarding the value, liquidity, or future use of JXRO tokens.
+
+---
+
+## 6. User Responsibility
+
+- You agree to use the Platform in compliance with all applicable laws.
+- You are solely responsible for all activity under your wallet or account, and any damage caused through your actions or omissions.
+
+---
+
+## 7. Limitation of Liability
+
+- JAVURO and its affiliates are not liable for any direct, indirect, incidental, or consequential damages arising from:
+  - Use or inability to use the Platform  
+  - Loss of data, digital assets, or unauthorized access  
+  - Changes to services, smart contract failures, or third-party behavior  
+- Your use of the Platform is entirely at your own risk.
+
+---
+
+## 8. Service Modifications and Termination
+
+- We may modify, suspend, or terminate all or part of the Platform at any time without prior notice.
+- JAVURO has no liability for any discontinuation or loss of access to the Platform or associated services.
+
+---
+
+## 9. Jurisdiction and Governing Law
+
+- These Terms shall be governed and interpreted in accordance with the laws of a neutral international jurisdiction.
+- Any disputes shall be subject to the exclusive jurisdiction of a competent court designated by JAVURO.
+- Users waive any objection to venue or jurisdiction on the basis of convenience or conflict of laws.
+
+---
+
+## 10. Updates and Revisions
+
+- These Terms may be updated at any time. The latest version will always be published at https://javuro.com/terms.
+- Continued use of the Platform after updates constitutes acceptance of the revised Terms.
+
+---
+
+## 11. Contact
+
+If you have any questions about these Terms, please contact us at:  
+📧 support@javuro.com  

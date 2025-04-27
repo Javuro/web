@@ -1,0 +1,36 @@
+JAVURO (JXRO) Terms of Service
+Article 1 (Purpose)
+These Terms of Service (the “Agreement”) set forth the terms and conditions for the use of the services provided by JAVURO (hereinafter referred to as the “Service”) by the Company. All users (hereinafter “Members”) who use the Service are deemed to have agreed to these terms.
+Article 2 (Provision and Modification of Services)
+1. Service Content: The Company utilizes state-of-the-art technology to offer various services, including real-time location-based recommendations, community voting, and token rewards.
+2. Service Modifications: The Company may change or suspend some or all aspects of the Service without prior notice for improvements, operational necessities, or technical issues. The Company shall not be held liable for any damages arising from such modifications.
+Article 3 (Membership Registration and Account Management)
+1. Membership registration shall be conducted in accordance with procedures established by the Company, and Members must ensure the accuracy of the information provided during registration.
+2. Members are responsible for maintaining the security of their account and password. Any unauthorized use of a Member’s account shall be solely the responsibility of that Member.
+3. The Company reserves the right to suspend or delete any Member’s account, after giving prior notice when deemed necessary.
+Article 4 (Member Obligations and Prohibited Conduct)
+1. Members shall comply with all applicable laws and these Terms when using the Service.
+2. Members are prohibited from:
+    * Unauthorized collection or theft of personal information from others.
+    * Actions that interfere with or harm the normal operation of the Service.
+    * Any illegal or improper conduct expressly prohibited by the Company.
+3. In the event of any violation, the Company may take necessary actions in accordance with applicable law and these Terms. All resulting civil or criminal liabilities shall be solely borne by the Member.
+Article 5 (Intellectual Property Rights)
+1. All content within the Service—including texts, images, designs, software, and other materials—is the property of the Company or its respective rights holders.
+2. Members may not reproduce, distribute, or modify any materials from the Service for commercial purposes without the Company’s prior written consent.
+Article 6 (Disclaimer and Limitation of Liability)
+1. While the Company endeavors to provide the Service with due care, it does not guarantee complete accuracy, stability, or timeliness.
+2. Members assume all risks arising from their use of the Service (including direct, indirect, incidental, special, or consequential damages), and the Company shall not be liable for any such damages.
+3. The Company shall not be liable for any loss or damage resulting from acts of God, force majeure, or the intentional or negligent acts of third parties.
+Article 7 (Privacy Protection)
+1. The Company shall manage Members’ personal information in compliance with applicable privacy laws and the Company’s Privacy Policy.
+2. By using the Service, Members consent to the collection, use, and processing of their personal information as described in the Privacy Policy.
+Article 8 (Dispute Resolution and Governing Law)
+1. Any dispute arising in connection with these Terms shall be governed by the laws of the Republic of Korea. The parties shall first endeavor to resolve any dispute through mutual consultation.
+2. If an amicable resolution cannot be reached, the dispute shall be submitted to the jurisdiction of the Seoul Central District Court.
+Article 9 (Amendments)
+1. The Company may amend these Terms as necessary, and any changes will take effect upon posting on the Service or by individual notice to Members.
+2. Members who do not agree with the amended Terms may discontinue their use of the Service. Continued use of the Service after such amendments will be deemed acceptance of the new terms.
+Article 10 (Miscellaneous)
+1. Matters not specified in these Terms shall be governed by relevant laws and customary practices.
+2. If any provision of these Terms is found to be invalid, the remaining provisions shall continue in full force and effect.

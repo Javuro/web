@@ -1,0 +1,7 @@
+# Netlify Redirects file
+
+# PDF 파일 액세스 보장
+/docs/*  /docs/:splat  200
+
+# SPA 라우팅 지원
+/*    /index.html   200
