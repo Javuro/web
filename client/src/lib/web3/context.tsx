@@ -75,6 +75,10 @@ function getWagmiConfig() {
     // Initialize WalletConnect connector with dynamic metadata
     const metadata = getMetadata();
     console.log('WalletConnect metadata:', metadata);
+    console.log('[WC-DEBUG] ProjectID:', WALLET_CONNECT_PROJECT_ID);
+    
+    // WalletConnect 초기화 전 디버깅 로그
+    console.log('[WC-DEBUG] Initializing WalletConnect connector...');
     
     const walletConnectConnector = new WalletConnectConnector({
       chains,
@@ -94,6 +98,8 @@ function getWagmiConfig() {
         metadata
       },
     });
+    
+    console.log('[WC-DEBUG] WalletConnect connector initialized successfully');
 
     wagmiConfig = createConfig({
       autoConnect: false,
@@ -103,7 +109,7 @@ function getWagmiConfig() {
 
     return wagmiConfig;
   } catch (error) {
-    console.error('Failed to initialize wagmi config:', error);
+    console.error('[WC-DEBUG] Failed to initialize wagmi config:', error);
     return null;
   }
 }
@@ -164,13 +170,15 @@ function Web3ContextProvider({ children }: { children: ReactNode }) {
 
         if (walletConnectConnector) {
           try {
-            console.log('Attempting WalletConnect connection on mobile...');
+            console.log('[WC-DEBUG] Attempting WalletConnect connection on mobile...');
             await connect({ connector: walletConnectConnector });
             return;
           } catch (error: any) {
-            console.error('WalletConnect connection error:', error);
+            console.error('[WC-DEBUG] WalletConnect connection error:', error);
             console.log('Falling back to MetaMask...');
           }
+        } else {
+          console.error('[WC-DEBUG] No WalletConnect connector found for mobile');
         }
       }
 
@@ -197,14 +205,16 @@ function Web3ContextProvider({ children }: { children: ReactNode }) {
       );
 
       if (!walletConnectConnector) {
+        console.error('[WC-DEBUG] WalletConnect not initialized in fallback');
         throw new Error('WalletConnect not initialized');
       }
 
       try {
-        console.log('Attempting WalletConnect connection...');
+        console.log('[WC-DEBUG] Attempting WalletConnect connection via fallback...');
+        console.log('[WC-DEBUG] WalletConnect connector:', walletConnectConnector ? 'Available' : 'Not available');
         await connect({ connector: walletConnectConnector });
       } catch (error: any) {
-        console.error('WalletConnect connection error details:', {
+        console.error('[WC-DEBUG] WalletConnect connection error details:', {
           name: error.name,
           message: error.message,
           code: error.code,
@@ -213,7 +223,7 @@ function Web3ContextProvider({ children }: { children: ReactNode }) {
         throw new Error('WalletConnect 연결에 실패했습니다. 다시 시도해주세요.');
       }
     } catch (err) {
-      console.error('Wallet connection error:', err);
+      console.error('[WC-DEBUG] Wallet connection error:', err);
       setError(err instanceof Error ? err.message : '지갑 연결에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setIsConnecting(false);
@@ -253,8 +263,14 @@ export function Web3Provider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // 브라우저 환경에서만 wagmi 구성 초기화
     if (typeof window !== 'undefined') {
-      const wagmiConfig = getWagmiConfig();
-      setConfig(wagmiConfig);
+      console.log('[WC-DEBUG] Initializing in browser environment...');
+      try {
+        const wagmiConfig = getWagmiConfig();
+        setConfig(wagmiConfig);
+        console.log('[WC-DEBUG] wagmiConfig initialized:', wagmiConfig ? 'Success' : 'Failed');
+      } catch (error) {
+        console.error('[WC-DEBUG] Error initializing wagmiConfig:', error);
+      }
       setInitialized(true);
     }
   }, []);
@@ -266,7 +282,7 @@ export function Web3Provider({ children }: { children: ReactNode }) {
 
   // 초기화 후 config가 없으면 에러 표시
   if (!config) {
-    console.error('Failed to initialize wagmi config');
+    console.error('[WC-DEBUG] Failed to initialize wagmi config');
     return (
       <div className="p-4 text-center text-red-500">
         지갑 연결 설정을 초기화할 수 없습니다. 브라우저를 새로고침하거나 다른 브라우저로 시도해주세요.
