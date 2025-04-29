@@ -26,23 +26,43 @@ export function WalletQRModal({ uri, isOpen, onOpenChange }: WalletQRModalProps)
     setError(null);
 
     try {
-      QRCode.toDataURL(uri, {
+      // WalletConnect URI 로깅 (디버깅용)
+      console.log('Generating QR code for URI:', uri.substring(0, 20) + '...');
+      
+      // QR 코드 생성 설정
+      const qrOptions = {
         color: {
           dark: '#000000',
           light: '#ffffff'
         },
-        errorCorrectionLevel: 'H',
+        errorCorrectionLevel: 'H' as const,
         margin: 1,
         width: 300
-      })
+      };
+      
+      // QR 코드 생성
+      QRCode.toDataURL(uri, qrOptions)
         .then(url => {
           setQrCodeDataUrl(url);
           setIsLoading(false);
+          console.log('QR code generated successfully');
         })
         .catch(err => {
           console.error('QR 코드 생성 실패:', err);
           setError('QR 코드 생성에 실패했습니다.');
           setIsLoading(false);
+          
+          // 실패 시 대체 솔루션 - 외부 QR 코드 생성 서비스 사용
+          try {
+            const encodedUri = encodeURIComponent(uri);
+            const backupQrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodedUri}`;
+            setQrCodeDataUrl(backupQrUrl);
+            setIsLoading(false);
+            setError(null);
+            console.log('Using backup QR code service');
+          } catch (backupErr) {
+            console.error('Backup QR code generation failed:', backupErr);
+          }
         });
     } catch (err) {
       console.error('QR 코드 생성 오류:', err);

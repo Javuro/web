@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { useWeb3 } from '@/lib/web3/context';
+import { useWeb3, addWalletConnectUriListener } from '@/lib/web3/context';
 import { Loader2 } from 'lucide-react';
 import { WalletQRModal } from './wallet-qr-modal';
 
@@ -16,68 +16,23 @@ export function WalletButton({ className }: WalletButtonProps) {
   const [walletConnectUri, setWalletConnectUri] = useState<string | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
 
-  // WebSocket 연결 설정
+  // WalletConnect URI 리스너 설정
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const setupWebSocket = () => {
-      try {
-        // WebSocket 연결
-        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const wsUrl = `${protocol}//${window.location.host}/ws`;
-        
-        const ws = new WebSocket(wsUrl);
-        wsRef.current = ws;
-        
-        // 연결 성공 시
-        ws.onopen = () => {
-          console.log('WebSocket connected successfully');
-        };
-        
-        // 메시지 수신 시
-        ws.onmessage = (event) => {
-          try {
-            const data = JSON.parse(event.data);
-            console.log('WebSocket message received:', data);
-            
-            // WalletConnect URI 수신 처리
-            if (data.uri && data.uri.startsWith('wc:')) {
-              setWalletConnectUri(data.uri);
-              setShowQRModal(true);
-            }
-          } catch (error) {
-            console.error('Failed to parse WebSocket message:', error);
-          }
-        };
-        
-        // 오류 발생 시
-        ws.onerror = (error) => {
-          console.error('WebSocket error:', error);
-        };
-        
-        // 연결 종료 시
-        ws.onclose = () => {
-          console.log('WebSocket connection closed');
-          
-          // 연결 종료 시 5초 후 재연결 시도
-          setTimeout(() => {
-            if (wsRef.current?.readyState !== WebSocket.OPEN) {
-              setupWebSocket();
-            }
-          }, 5000);
-        };
-      } catch (error) {
-        console.error('Failed to setup WebSocket:', error);
-      }
+    // WalletConnect URI를 받았을 때 처리하는 함수
+    const handleWalletConnectUri = (uri: string) => {
+      console.log('WalletConnect URI received in button component');
+      setWalletConnectUri(uri);
+      setShowQRModal(true);
     };
     
-    setupWebSocket();
+    // 리스너 등록
+    const removeListener = addWalletConnectUriListener(handleWalletConnectUri);
     
-    // 컴포넌트 언마운트 시 WebSocket 연결 종료
+    // 컴포넌트 언마운트 시 리스너 제거
     return () => {
-      if (wsRef.current) {
-        wsRef.current.close();
-      }
+      removeListener();
     };
   }, []);
 
@@ -133,6 +88,18 @@ export function WalletButton({ className }: WalletButtonProps) {
     }
   };
 
+  // 브라우저에 메타마스크 또는 다른 Web3 지갑 확장앱 존재 여부 확인
+  const [hasWalletExtension, setHasWalletExtension] = useState(false);
+  
+  // 브라우저 지갑 확장 감지
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const hasEthereum = !!window.ethereum;
+      setHasWalletExtension(hasEthereum);
+      console.log('Web3 지갑 확장 감지:', hasEthereum ? '설치됨' : '설치되지 않음');
+    }
+  }, []);
+
   // 수동으로 WalletConnect QR 코드 표시
   const handleConnectWithQR = async () => {
     // 팝업 닫기
@@ -147,14 +114,11 @@ export function WalletButton({ className }: WalletButtonProps) {
       });
     }
     
-    // 더미 URI 설정 (테스트용)
-    setWalletConnectUri('wc:00e46b69-d0cc-4b3e-b6a2-cee442f97188@1?bridge=https%3A%2F%2Fbridge.walletconnect.org&key=91303dedf64285cbbaf9120f6e9d160a5c8aa3deb67017a3874cd272323f48ae');
-    
     // QR 모달 열기
     setShowQRModal(true);
     
     try {
-      // 실제 연결 시도
+      // WalletConnect 실행 (URI는 이벤트 리스너를 통해 받아옴)
       connectWallet();
     } catch (error) {
       console.error('WalletConnect connection error:', error);

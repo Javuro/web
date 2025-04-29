@@ -31,6 +31,9 @@ const WALLET_CONNECT_PROJECT_ID = "ce3c8945b428cc57f1c3c0945e0f8d13";
 
 // WebSocket 연결 관리
 let wsConnection: WebSocket | null = null;
+// WalletConnect URI 이벤트 리스너
+type WCUriListener = (uri: string) => void;
+const wcUriListeners: WCUriListener[] = [];
 
 // WalletConnect 메타데이터 정의
 const WALLET_CONNECT_METADATA = {
@@ -39,6 +42,8 @@ const WALLET_CONNECT_METADATA = {
   url: 'https://javuro.com',
   icons: ['https://javuro.com/favicon.png']
 };
+
+
 
 // 블록체인 네트워크 설정
 const { chains, publicClient } = configureChains(
@@ -54,26 +59,82 @@ const { chains, publicClient } = configureChains(
 
 let wagmiConfig: ReturnType<typeof createConfig> | null = null;
 
+// WalletConnect URI 리스너 등록
+export function addWalletConnectUriListener(listener: WCUriListener) {
+  wcUriListeners.push(listener);
+  return () => {
+    const index = wcUriListeners.indexOf(listener);
+    if (index > -1) {
+      wcUriListeners.splice(index, 1);
+    }
+  };
+}
+
+// WalletConnect URI 발견 시 모든 리스너에게 알림
+function notifyWalletConnectUri(uri: string) {
+  if (!uri || !uri.startsWith('wc:')) return;
+  
+  console.log('WalletConnect URI detected:', uri.substring(0, 20) + '...');
+  wcUriListeners.forEach(listener => {
+    try {
+      listener(uri);
+    } catch (error) {
+      console.error('Error in WalletConnect URI listener:', error);
+    }
+  });
+}
+
+// 환경 감지 (Netlify vs 개발환경)
+function isNetlifyEnvironment() {
+  return typeof window !== 'undefined' && window.location.hostname.includes('.netlify.app');
+}
+
 // websocket 서버에 연결
 function connectToWsServer() {
   if (typeof window === 'undefined') return null;
   if (wsConnection && wsConnection.readyState === WebSocket.OPEN) return wsConnection;
   
   try {
+    // Netlify 환경에서는 서버리스 함수를 사용한 대체 경로 사용
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUrl = `${protocol}//${window.location.host}/ws`;
+    let wsUrl;
+    
+    if (isNetlifyEnvironment()) {
+      // Netlify 환경에서는 서버리스 함수를 사용
+      wsUrl = `${protocol}//${window.location.host}/wallet-connect`;
+    } else {
+      // 개발 환경에서는 일반 WebSocket 사용
+      wsUrl = `${protocol}//${window.location.host}/ws`;
+    }
+    
     console.log('Connecting to WebSocket server at:', wsUrl);
     
     const ws = new WebSocket(wsUrl);
     
     ws.onopen = () => {
       console.log('WebSocket connection established');
+      
+      // Netlify 환경인 경우 초기 연결 메시지 전송
+      if (isNetlifyEnvironment()) {
+        ws.send(JSON.stringify({ 
+          type: 'init', 
+          clientInfo: {
+            userAgent: navigator.userAgent,
+            url: window.location.href
+          }
+        }));
+      }
     };
     
     ws.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
         console.log('Received from server:', data);
+        
+        // WalletConnect URI 감지하여 리스너에게 전달
+        if (data.uri && data.uri.startsWith('wc:')) {
+          notifyWalletConnectUri(data.uri);
+        }
       } catch (error) {
         console.error('Failed to parse WebSocket message:', error);
       }
@@ -85,6 +146,15 @@ function connectToWsServer() {
     
     ws.onclose = (event) => {
       console.log('WebSocket connection closed:', event.code, event.reason);
+      
+      // 연결 끊김 시 5초 후 재시도 (Netlify에서만)
+      if (isNetlifyEnvironment()) {
+        setTimeout(() => {
+          console.log('Attempting to reconnect WebSocket...');
+          wsConnection = null;
+          connectToWsServer();
+        }, 5000);
+      }
     };
     
     wsConnection = ws;
