@@ -95,14 +95,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const data = JSON.parse(message.toString());
         console.log('Received message:', data);
         
+        // 연결 초기화 메시지 처리
+        if (data.type === 'connect') {
+          // 클라이언트 정보 로깅
+          console.log('Client info:', data.clientInfo);
+          
+          // 등록 확인 응답
+          if (ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({ 
+              type: 'connection', 
+              status: 'connected'
+            }));
+          }
+        }
         // WalletConnect 메시지 처리
-        if (data.type === 'walletconnect') {
+        else if (data.type === 'walletconnect') {
           if (data.action === 'register_uri') {
             // QR 코드 URI 저장
             walletConnectSessions.set(clientId, {
               uri: data.uri,
               timestamp: Date.now()
             });
+            
+            // 연결된 모든 클라이언트에게 URI 전파
+            wss.clients.forEach((client: WebSocket) => {
+              if (client.readyState === WebSocket.OPEN) {
+                try {
+                  client.send(JSON.stringify({ 
+                    type: 'walletconnect', 
+                    status: 'uri_available',
+                    uri: data.uri
+                  }));
+                } catch (err) {
+                  console.error('Failed to send URI to client:', err);
+                }
+              }
+            });
+            
             // 성공 응답
             if (ws.readyState === WebSocket.OPEN) {
               ws.send(JSON.stringify({ 
@@ -113,7 +142,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
               }));
             }
           }
-        } else {
+        } 
+        else {
           // 일반 메시지 응답
           if (ws.readyState === WebSocket.OPEN) {
             ws.send(JSON.stringify({ status: 'ok', message: 'Message received' }));

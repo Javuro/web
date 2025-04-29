@@ -14,17 +14,23 @@ export function WalletButton({ className }: WalletButtonProps) {
   const [showPopupWallets, setShowPopupWallets] = useState(false);
   const [showQRModal, setShowQRModal] = useState(false);
   const [walletConnectUri, setWalletConnectUri] = useState<string | null>(null);
-  const wsRef = useRef<WebSocket | null>(null);
-
+  
+  // 브라우저 지갑 확장 감지
+  const [hasWalletExtension, setHasWalletExtension] = useState(false);
+  
   // WalletConnect URI 리스너 설정
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
     // WalletConnect URI를 받았을 때 처리하는 함수
     const handleWalletConnectUri = (uri: string) => {
-      console.log('WalletConnect URI received in button component');
+      console.log('WalletConnect URI received:', uri.substring(0, 20) + '...');
       setWalletConnectUri(uri);
-      setShowQRModal(true);
+      
+      // QR 모달 표시
+      if (!showQRModal) {
+        setShowQRModal(true);
+      }
     };
     
     // 리스너 등록
@@ -34,7 +40,7 @@ export function WalletButton({ className }: WalletButtonProps) {
     return () => {
       removeListener();
     };
-  }, []);
+  }, [showQRModal]);
 
   // URI 감시자 설정 (WalletConnect 연결 완료 시 QR 모달 닫기)
   useEffect(() => {
@@ -50,6 +56,15 @@ export function WalletButton({ className }: WalletButtonProps) {
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
       setIsMobileOrSafari(isMobile || isSafari);
+      
+      // 브라우저 지갑 확장앱 감지
+      const hasEthereum = !!window.ethereum;
+      setHasWalletExtension(hasEthereum);
+      console.log('Device detection:', { 
+        isMobile, 
+        isSafari, 
+        hasWalletExtension: hasEthereum 
+      });
     }
   }, []);
 
@@ -88,18 +103,6 @@ export function WalletButton({ className }: WalletButtonProps) {
     }
   };
 
-  // 브라우저에 메타마스크 또는 다른 Web3 지갑 확장앱 존재 여부 확인
-  const [hasWalletExtension, setHasWalletExtension] = useState(false);
-  
-  // 브라우저 지갑 확장 감지
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const hasEthereum = !!window.ethereum;
-      setHasWalletExtension(hasEthereum);
-      console.log('Web3 지갑 확장 감지:', hasEthereum ? '설치됨' : '설치되지 않음');
-    }
-  }, []);
-
   // 수동으로 WalletConnect QR 코드 표시
   const handleConnectWithQR = async () => {
     // 팝업 닫기
@@ -125,6 +128,22 @@ export function WalletButton({ className }: WalletButtonProps) {
     }
   };
 
+  // 지갑 연결 버튼 클릭 핸들러
+  const handleConnect = () => {
+    // 확장앱 유무에 따라 다른 동작
+    if (!hasWalletExtension) {
+      // 확장앱이 없을 경우 QR 코드 모달 바로 표시
+      handleConnectWithQR();
+    } else {
+      // 확장앱이 있을 경우 기본 연결 프로세스
+      if (isMobileOrSafari) {
+        setShowPopupWallets(!showPopupWallets);
+      } else {
+        connectWallet();
+      }
+    }
+  };
+
   return (
     <div className={`relative ${className}`}>
       {account ? (
@@ -134,7 +153,7 @@ export function WalletButton({ className }: WalletButtonProps) {
       ) : (
         <>
           <Button 
-            onClick={isMobileOrSafari ? () => setShowPopupWallets(!showPopupWallets) : connectWallet} 
+            onClick={handleConnect}
             disabled={isConnecting}
             className="relative"
           >
@@ -149,7 +168,7 @@ export function WalletButton({ className }: WalletButtonProps) {
           </Button>
           
           {/* 모바일/사파리용 지갑 선택 팝업 */}
-          {isMobileOrSafari && showPopupWallets && (
+          {isMobileOrSafari && hasWalletExtension && showPopupWallets && (
             <div className="absolute z-50 mt-2 p-4 bg-background border rounded-md shadow-lg w-[200px] flex flex-col gap-2">
               <Button variant="outline" onClick={() => openWalletApp('metamask')}>
                 MetaMask

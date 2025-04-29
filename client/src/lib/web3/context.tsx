@@ -31,9 +31,6 @@ const WALLET_CONNECT_PROJECT_ID = "ce3c8945b428cc57f1c3c0945e0f8d13";
 
 // WebSocket 연결 관리
 let wsConnection: WebSocket | null = null;
-// WalletConnect URI 이벤트 리스너
-type WCUriListener = (uri: string) => void;
-const wcUriListeners: WCUriListener[] = [];
 
 // WalletConnect 메타데이터 정의
 const WALLET_CONNECT_METADATA = {
@@ -43,29 +40,19 @@ const WALLET_CONNECT_METADATA = {
   icons: ['https://javuro.com/favicon.png']
 };
 
-
-
-// 블록체인 네트워크 설정
-const { chains, publicClient } = configureChains(
-  [bsc],
-  [
-    jsonRpcProvider({
-      rpc: () => ({
-        http: 'https://bsc-dataseed.binance.org',
-      }),
-    }),
-  ]
-);
-
-let wagmiConfig: ReturnType<typeof createConfig> | null = null;
+// WalletConnect URI 이벤트 리스너
+type WCUriListener = (uri: string) => void;
+const wcUriListeners: WCUriListener[] = [];
 
 // WalletConnect URI 리스너 등록
 export function addWalletConnectUriListener(listener: WCUriListener) {
+  console.log('Adding WalletConnect URI listener');
   wcUriListeners.push(listener);
   return () => {
     const index = wcUriListeners.indexOf(listener);
     if (index > -1) {
       wcUriListeners.splice(index, 1);
+      console.log('Removed WalletConnect URI listener');
     }
   };
 }
@@ -165,6 +152,20 @@ function connectToWsServer() {
   }
 }
 
+// 블록체인 네트워크 설정
+const { chains, publicClient } = configureChains(
+  [bsc],
+  [
+    jsonRpcProvider({
+      rpc: () => ({
+        http: 'https://bsc-dataseed.binance.org',
+      }),
+    }),
+  ]
+);
+
+let wagmiConfig: ReturnType<typeof createConfig> | null = null;
+
 // 클라이언트 사이드에서만 wagmi config 초기화
 function getWagmiConfig() {
   if (typeof window === 'undefined') {
@@ -192,7 +193,7 @@ function getWagmiConfig() {
       chains,
       options: {
         projectId: WALLET_CONNECT_PROJECT_ID,
-        showQrModal: true,
+        showQrModal: false, // 커스텀 QR 모달 사용
         metadata: WALLET_CONNECT_METADATA,
       },
     });
@@ -269,68 +270,51 @@ function Web3ContextProvider({ children }: { children: ReactNode }) {
       const isSafariBrowser = typeof navigator !== 'undefined' && 
         /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
       
-      // WalletConnect 우선 시도 (모바일 또는 Safari 브라우저)
-      if (isMobileDevice || isSafariBrowser) {
+      // 브라우저 확장 감지
+      const hasExtension = typeof window !== 'undefined' && !!window.ethereum;
+      
+      console.log('Device detection:', { 
+        isMobile: isMobileDevice, 
+        isSafari: isSafariBrowser,
+        hasExtension: hasExtension
+      });
+
+      // WalletConnect 우선 시도 (모바일이나 Safari 또는 확장이 없는 경우)
+      if (isMobileDevice || isSafariBrowser || !hasExtension) {
         const walletConnectConnector = config.connectors.find(
           c => c instanceof WalletConnectConnector
         );
 
         if (walletConnectConnector) {
           try {
-            console.log('Attempting WalletConnect connection on mobile/Safari...');
-            
-            // 서버에 연결된 WebSocket이 있으면 URI 요청을 보낼 준비
-            if (ws && ws.readyState === WebSocket.OPEN) {
-              // WalletConnect의 URI를 얻기 위한 이벤트 리스너 설정
-              const uriListener = async (event: any) => {
-                try {
-                  const data = JSON.parse(event.data);
-                  
-                  // walletconnect:// URI 감지
-                  if (data.type === 'walletconnect' && data.uri) {
-                    // QR 코드 페이지로 리디렉션
-                    window.open(`/qr-view.html?uri=${encodeURIComponent(data.uri)}`, '_blank');
-                    
-                    // 리스너 제거
-                    ws.removeEventListener('message', uriListener);
-                  }
-                } catch (error) {
-                  console.error('Failed to parse WebSocket message:', error);
-                }
-              };
-              
-              // 리스너 등록
-              ws.addEventListener('message', uriListener);
-            }
-            
-            // WalletConnect 연결 시도
+            console.log('Attempting WalletConnect connection...');
             await connect({ connector: walletConnectConnector });
             return;
           } catch (error: any) {
             console.error('WalletConnect connection error:', error);
-            console.log('Falling back to MetaMask...');
+            console.log('Falling back to injected connector...');
           }
         }
       }
 
-      // MetaMask 시도
-      if (typeof window !== 'undefined' && window.ethereum) {
+      // MetaMask/확장 시도
+      if (hasExtension) {
         const injectedConnector = config.connectors.find(
           c => c instanceof InjectedConnector
         );
 
         if (injectedConnector) {
           try {
-            console.log('Attempting MetaMask connection...');
+            console.log('Attempting Injected connector connection...');
             await connect({ connector: injectedConnector });
             return;
           } catch (error) {
-            console.log('MetaMask connection failed, trying WalletConnect...', error);
+            console.log('Injected connector failed, trying WalletConnect...', error);
           }
         }
       }
 
-      // 최종적으로 WalletConnect로 폴백
+      // 최종적으로 WalletConnect 시도
       const walletConnectConnector = config.connectors.find(
         c => c instanceof WalletConnectConnector
       );
@@ -340,7 +324,7 @@ function Web3ContextProvider({ children }: { children: ReactNode }) {
       }
 
       try {
-        console.log('Attempting WalletConnect connection...');
+        console.log('Attempting WalletConnect connection as fallback...');
         await connect({ connector: walletConnectConnector });
       } catch (error: any) {
         console.error('WalletConnect connection error details:', {
