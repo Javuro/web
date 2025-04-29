@@ -166,6 +166,25 @@ const { chains, publicClient } = configureChains(
 
 let wagmiConfig: ReturnType<typeof createConfig> | null = null;
 
+// Netlify 서버리스 함수를 사용하여 WalletConnect URI 얻기
+async function getWalletConnectURIFromNetlify() {
+  try {
+    // 서버리스 함수 호출
+    const response = await fetch('/.netlify/functions/wallet-connect');
+    const data = await response.json();
+    
+    if (data && data.uri && data.uri.startsWith('wc:')) {
+      console.log('Got WalletConnect URI from Netlify function:', data.uri.substring(0, 20) + '...');
+      return data.uri;
+    }
+    
+    throw new Error('Invalid URI response from Netlify function');
+  } catch (error) {
+    console.error('Failed to get WalletConnect URI from Netlify function:', error);
+    return null;
+  }
+}
+
 // 클라이언트 사이드에서만 wagmi config 초기화
 function getWagmiConfig() {
   if (typeof window === 'undefined') {
@@ -176,8 +195,17 @@ function getWagmiConfig() {
   if (wagmiConfig) return wagmiConfig;
 
   try {
-    // 서버 측 WebSocket 연결 구성
-    connectToWsServer();
+    // 환경에 따라 WebSocket 연결
+    if (!isNetlifyEnvironment()) {
+      connectToWsServer();
+    } else {
+      // Netlify 환경에서는 서버리스 함수를 이용해 URI 획득 준비
+      getWalletConnectURIFromNetlify().then(uri => {
+        if (uri) {
+          notifyWalletConnectUri(uri);
+        }
+      });
+    }
     
     // 메타마스크 커넥터 설정
     const injectedConnector = new InjectedConnector({

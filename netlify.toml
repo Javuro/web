@@ -42,5 +42,10 @@
     no-cache,
     no-store,
     must-revalidate'''
+    # 웹소켓 연결 허용
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, OPTIONS, PUT, DELETE"
+    Access-Control-Allow-Headers = "Content-Type, Authorization, X-Requested-With"
+    Access-Control-Max-Age = "2592000"
 
 # Removed NextJS plugin as it's not needed for this project
