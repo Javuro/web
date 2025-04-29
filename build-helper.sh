@@ -4,9 +4,19 @@
 
 echo "Running build helper script for Netlify deployment..."
 
-# _redirects 파일 복사
-echo "Copying _redirects file to dist/public directory..."
-cp client/public/_redirects dist/public/
+# _redirects 및 _headers 파일 복사
+echo "Copying _redirects and _headers files to dist/public directory..."
+cp client/public/_redirects dist/public/ 2>/dev/null || echo "No _redirects file found"
+cp client/public/_headers dist/public/ || echo "Creating _headers file..."
+
+# _headers 파일이 없는 경우 생성
+if [ ! -f "dist/public/_headers" ]; then
+  echo "Creating _headers file with CSP settings..."
+  cat > dist/public/_headers << EOL
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src * data: blob:; connect-src *; frame-src *;
+EOL
+fi
 
 # index.html 확인 및 복사
 if [ ! -f "dist/public/index.html" ]; then

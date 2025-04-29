@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npm run build && bash ./build-helper.sh"
   publish = "dist/public"
   functions = "functions"
 
