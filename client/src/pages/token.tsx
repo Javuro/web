@@ -163,11 +163,11 @@ export default function Token() {
               <h2 className="text-2xl font-bold mb-6 text-center">Token Allocation Framework</h2>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span>Development Team</span>
+                  <span>Founder & Team Allocation</span>
                   <span className="font-semibold">20%</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span>Community & Platform Activities</span>
+                  <span>Community & Ecosystem Rewards</span>
                   <span className="font-semibold">33%</span>
                 </div>
                 <div className="flex justify-between items-center">
@@ -175,24 +175,24 @@ export default function Token() {
                   <span className="font-semibold">20%</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span>Ecosystem Development</span>
+                  <span>IEO / Launchpad</span>
                   <span className="font-semibold">5%</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span>Platform Operations</span>
+                  <span>Liquidity & Operational Expenses</span>
                   <span className="font-semibold">15%</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span>Community Growth</span>
+                  <span>Marketing & Partnerships</span>
                   <span className="font-semibold">4%</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span>Technology Reserve</span>
+                  <span>Reserve</span>
                   <span className="font-semibold">3%</span>
                 </div>
               </div>
               <p className="mt-6 text-sm text-muted-foreground">
-                <span className="font-medium">Note:</span> Token distribution will follow a controlled release schedule to ensure platform stability.
+                <span className="font-medium">Note:</span> All allocations are subject to lock-up (vesting) conditions to prevent market disruption and ensure long-term incentives.
               </p>
             </CardContent>
           </Card>
@@ -232,46 +232,52 @@ export default function Token() {
                   </div>
                   
                   <div className="grid grid-cols-3 gap-2 text-sm">
-                    <div>Development Team</div>
+                    <div>Founder & Team</div>
                     <div>20%</div>
-                    <div>Long-term platform development and maintenance</div>
+                    <div>Subject to lock-up and vesting conditions</div>
                   </div>
                   
                   <div className="grid grid-cols-3 gap-2 text-sm">
-                    <div>Community & Platform</div>
+                    <div>Community & Ecosystem</div>
                     <div>33%</div>
-                    <div>Platform participation and contribution recognition</div>
+                    <div>Check-ins, reviews, event hosting, content curation, and DAO voting</div>
                   </div>
                   
                   <div className="grid grid-cols-3 gap-2 text-sm">
                     <div>Strategic Partnerships</div>
                     <div>20%</div>
-                    <div>Technology and integration partnerships</div>
+                    <div>VC, OTC, and DAO-based strategic partners and contributors</div>
                   </div>
                   
                   <div className="grid grid-cols-3 gap-2 text-sm">
-                    <div>Ecosystem Development</div>
+                    <div>IEO / Launchpad</div>
                     <div>5%</div>
-                    <div>For platform ecosystem expansion</div>
+                    <div>Public participation opportunities via exchange launchpads</div>
                   </div>
                   
                   <div className="grid grid-cols-3 gap-2 text-sm">
-                    <div>Platform Operations</div>
+                    <div>Liquidity & Operations</div>
                     <div>15%</div>
-                    <div>Technical maintenance and operational costs</div>
+                    <div>CEX/DEX listings, operational costs, and infrastructure</div>
                   </div>
                   
                   <div className="grid grid-cols-3 gap-2 text-sm">
-                    <div>Community Growth</div>
+                    <div>Marketing & Partnerships</div>
                     <div>4%</div>
-                    <div>User education and community building</div>
+                    <div>User acquisition, viral expansion, and local partnerships</div>
                   </div>
                   
                   <div className="grid grid-cols-3 gap-2 text-sm">
-                    <div>Technology Reserve</div>
+                    <div>Reserve</div>
                     <div>3%</div>
-                    <div>Strategic technical improvements and contingencies</div>
+                    <div>DAO proposals, technical flexibility, and emergency situations</div>
                   </div>
+                </div>
+                
+                <div className="mt-4 p-4 bg-gray-900/30 rounded-lg text-sm text-muted-foreground">
+                  <p className="font-medium mb-2">Lock-Up & Vesting Structure:</p>
+                  <p className="mb-2">All token allocations are subject to lock-up (vesting) conditions to prevent market disruption caused by sudden mass sell-offs, ensuring long-term incentives for all participants. The Founder & Team allocation follows a structured vesting schedule with specific unlock triggers based on platform milestones.</p>
+                  <p className="mb-2">Community & Ecosystem tokens will be distributed gradually over 5 to 7 years via smart contract-based automatic distribution systems. Strategic Partnership allocations are subject to full lock-up followed by vesting periods ranging from 6 to 12 months.</p>
                 </div>
                 
                 <div className="mt-4 p-4 bg-gray-900/30 rounded-lg text-sm text-muted-foreground">

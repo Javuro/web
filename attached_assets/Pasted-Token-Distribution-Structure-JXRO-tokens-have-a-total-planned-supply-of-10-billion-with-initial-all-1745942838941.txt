@@ -1,0 +1,23 @@
+Token Distribution Structure
+JXRO tokens have a total planned supply of 10 billion, with initial allocation determined based on the sustainability of the project and fairness, as outlined below. All quantities are subject to lock-up (vesting) conditions to prevent market disruption caused by a sudden mass sell-off by any group, thereby ensuring long-term incentives.
+The planned distribution is as follows (subject to change only with clear community notice and input):
+• Founder & Team Allocation (20 %) — Updated Lock-Up Structure Sub-bucket Size Lock-up & Vesting Unlock Trigger
+Founder B 18 % • 12-month cliff No additional trigger • 24-month linear vesting
+• All Founder & Team tokens are custodied in multisig operational wallets controlled by the corporate entity. Each vesting transaction is executed on-chain and published in real-time via official announcements and block-explorer links.
+• Community & Ecosystem Rewards (33%):
+The core pool for reward-based distributions driven by user activities such as check- ins, reviews, event hosting, content curation, staking, and DAO voting. This allocation will be distributed gradually over 5 to 7 years via a smart contract-based automatic distribution system.
+• Strategic Partnerships (20%):
+Allocated to VC, OTC, and DAO-based strategic partners and contributors. This allocation is subject to a full lock-up followed by a vesting period of 6 to 12 months. It is allocated exclusively for mutual contractual contributions such as partnerships, distribution infrastructure development, legal advisory, and global marketing aimed at building the ecosystem.
+• IEO / Launchpad (5%):
+Tokens designated for public participation opportunities such as exchange launchpads or public sales. All procedures will adhere to prior legal advisory and regulatory compliance, with most tokens subject to a lock-up mechanism. Participation by
+     Founder A2%• 6-month cliff
+• 10-month linear vesting(equal monthly tranches)Unlocks only when any 1 is met:1 CEX depth ≥ 0.3 %FDV 2 DAO staking TVL ≥ 0.3 % FDV
+3 7-day avg volume ≥ 2 × monthly vesting MV    
+general users is structured as a contribution to the platform rather than a speculative or profit-guarantee investment.
+• Liquidity & Operational Expenses (15%):
+Funds essential for the realization of the project, covering expenses such as CEX/DEX listing fees, market-making deposits, app development, infrastructure operational costs, and legal/advisory fees. The deployment of these tokens will be phased to prevent overly concentrated supply, and usage will be transparently disclosed to the community.
+• Marketing & Partnerships (4%):
+Budgeted for initial user acquisition, viral expansion, and expanding local partnerships. This fund will primarily be used for airdrops, content competitions, influencer collaborations, and event campaigns. The tokens for this purpose will be managed via a separate wallet, and usage details will be disclosed on a promotional basis.
+• Reserve (3%):
+A strategic reserve for future execution of DAO proposals, securing technical/policy flexibility, and addressing emergency situations. Usage of this pool will be subject to community consultation or governance vote procedures and will be included as part of quarterly reports under an established management system.
+ 
