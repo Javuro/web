@@ -17,16 +17,16 @@
         window.process = { 
           env: { 
             NODE_ENV: 'production',
-            VITE_WALLET_CONNECT_PROJECT_ID: 'ce3c8945b428cc57f1c3c0945e0f8d13'
+            VITE_WALLET_CONNECT_PROJECT_ID: '752b22982064c36519e6001a716b6845'
           } 
         };
       } else if (process.env) {
         // Ensure VITE_WALLET_CONNECT_PROJECT_ID is always available
-        process.env.VITE_WALLET_CONNECT_PROJECT_ID = process.env.VITE_WALLET_CONNECT_PROJECT_ID || 'ce3c8945b428cc57f1c3c0945e0f8d13';
+        process.env.VITE_WALLET_CONNECT_PROJECT_ID = process.env.VITE_WALLET_CONNECT_PROJECT_ID || '752b22982064c36519e6001a716b6845';
       }
       
       // Expose WalletConnect project ID globally for direct access
-      window.WALLET_CONNECT_PROJECT_ID = 'ce3c8945b428cc57f1c3c0945e0f8d13';
+      window.WALLET_CONNECT_PROJECT_ID = '752b22982064c36519e6001a716b6845';
       
       if (typeof require === 'undefined') {
         window.require = function() { return {}; };
