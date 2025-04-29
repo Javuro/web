@@ -60,36 +60,16 @@ function getWagmiConfig() {
       },
     });
 
-    // 현재 URL과 favicon URL을 안전하게 가져오는 함수
+    // 메타데이터 구성
+    // 참고: 도메인은 항상 javuro.com으로 고정
     const getMetadata = () => {
-      if (typeof window === 'undefined') {
-        // 서버 사이드에서는 기본값 사용
-        return {
-          name: 'JAVURO',
-          description: 'JAVURO Web3 Application',
-          url: 'https://javuro.com',
-          icons: ['https://javuro.com/favicon.png']
-        };
-      }
-      
-      // 클라이언트 사이드에서는 실제 URL 사용
-      try {
-        return {
-          name: 'JAVURO',
-          description: 'JAVURO Web3 Application',
-          url: window.location.origin,
-          icons: [`${window.location.origin}/favicon.png`]
-        };
-      } catch (error) {
-        console.error('Error creating metadata:', error);
-        // 오류 발생 시 대체 값 사용
-        return {
-          name: 'JAVURO',
-          description: 'JAVURO Web3 Application',
-          url: 'https://javuro.com',
-          icons: ['https://javuro.com/favicon.png']
-        };
-      }
+      // 배포 환경에서는 항상 javuro.com 도메인 사용
+      return {
+        name: 'JAVURO',
+        description: 'JAVURO Web3 Application',
+        url: 'https://javuro.com',
+        icons: ['https://javuro.com/favicon.png']
+      };
     };
 
     // Initialize WalletConnect connector with dynamic metadata

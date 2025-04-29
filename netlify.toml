@@ -47,5 +47,7 @@
     Access-Control-Allow-Methods = "GET, POST, OPTIONS, PUT, DELETE"
     Access-Control-Allow-Headers = "Content-Type, Authorization, X-Requested-With"
     Access-Control-Max-Age = "2592000"
+    # WalletConnect QR 모달 등 프레임 관련 이슈 해결을 위한 CSP 설정
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src * data: blob:; connect-src *; frame-src *;"
 
 # Removed NextJS plugin as it's not needed for this project
