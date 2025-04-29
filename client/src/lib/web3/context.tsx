@@ -25,7 +25,7 @@ declare global {
  */
 
 // WalletConnect Project ID - 환경 변수 또는 기본값 사용
-const WALLET_CONNECT_PROJECT_ID = import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID || "ce3c8945b428cc57f1c3c0945e0f8d13";
+const WALLET_CONNECT_PROJECT_ID = import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID || "752b22982064c36519e6001a716b6845";
 
 // Configure chains
 const { chains, publicClient } = configureChains(
