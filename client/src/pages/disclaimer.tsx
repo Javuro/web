@@ -27,47 +27,47 @@ export default function Disclaimer() {
 
         {/* Quick Summary Section */}
         <div className="max-w-4xl mx-auto mb-16">
-          <Card className="bg-gradient-to-br from-black/60 to-[#3A86FF]/10 border-[#3A86FF]/20">
+          <Card className="bg-gradient-to-br from-black/60 to-[#A7F3D0]/10 border-emerald-300/20">
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <Info className="mr-2 h-6 w-6 text-[#3A86FF]" /> 
+                <Info className="mr-2 h-6 w-6 text-emerald-300" />
                 Quick Summary (Key Points)
               </h2>
               <div className="space-y-3 text-muted-foreground">
                 <p className="flex items-start">
-                  <span className="text-[#3A86FF] mr-2">1.</span> 
+                  <span className="text-emerald-300 mr-2">1.</span>
                   This document is for informational purposes only and does not constitute legal, financial, or investment advice.
                 </p>
                 <p className="flex items-start">
-                  <span className="text-[#3A86FF] mr-2">2.</span> 
+                  <span className="text-emerald-300 mr-2">2.</span>
                   JXRO is a utility token and is not classified as a security, stock, or investment product.
                 </p>
                 <p className="flex items-start">
-                  <span className="text-[#3A86FF] mr-2">3.</span> 
+                  <span className="text-emerald-300 mr-2">3.</span>
                   The project does not guarantee any value appreciation, returns, or income from holding the token.
                 </p>
                 <p className="flex items-start">
-                  <span className="text-[#3A86FF] mr-2">4.</span> 
+                  <span className="text-emerald-300 mr-2">4.</span>
                   All token use and participation are subject to your local laws and your own responsibility.
                 </p>
                 <p className="flex items-start">
-                  <span className="text-[#3A86FF] mr-2">5.</span> 
+                  <span className="text-emerald-300 mr-2">5.</span>
                   JAVURO is not liable for losses arising from technical failures, regulatory changes, or market conditions.
                 </p>
                 <p className="flex items-start">
-                  <span className="text-[#3A86FF] mr-2">6.</span> 
+                  <span className="text-emerald-300 mr-2">6.</span>
                   Governance functions may be introduced in the future but hold no legal authority at this time.
                 </p>
                 <p className="flex items-start">
-                  <span className="text-[#3A86FF] mr-2">7.</span> 
+                  <span className="text-emerald-300 mr-2">7.</span>
                   All future plans and projections are forward-looking and subject to change.
                 </p>
                 <p className="flex items-start">
-                  <span className="text-[#3A86FF] mr-2">8.</span> 
+                  <span className="text-emerald-300 mr-2">8.</span>
                   Official information is only provided through designated channels.
                 </p>
                 <p className="flex items-start">
-                  <span className="text-[#3A86FF] mr-2">9.</span> 
+                  <span className="text-emerald-300 mr-2">9.</span>
                   By using this information, you accept full responsibility for your actions.
                 </p>
               </div>
@@ -78,7 +78,7 @@ export default function Disclaimer() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-center">Full Legal Disclaimer</h2>
           <p className="text-muted-foreground mb-10 text-center">
-            The Whitepaper is provided for informational purposes only and does not constitute a binding agreement, 
+            The Whitepaper is provided for informational purposes only and does not constitute a binding agreement,
             investment solicitation, financial advice, legal counsel, or an offer to sell financial instruments in any jurisdiction.
           </p>
         </div>
@@ -87,7 +87,7 @@ export default function Disclaimer() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <Wallet className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <Wallet className="mr-2 h-6 w-6 text-emerald-300" />
                 1. Legal Nature of the Token
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -108,7 +108,7 @@ export default function Disclaimer() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <FileText className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <FileText className="mr-2 h-6 w-6 text-emerald-300" />
                 2. Non-Binding and Subject to Change
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -125,7 +125,7 @@ export default function Disclaimer() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <Shield className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <Shield className="mr-2 h-6 w-6 text-emerald-300" />
                 3. Limitation of Liability
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -142,7 +142,7 @@ export default function Disclaimer() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <Scale className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <Scale className="mr-2 h-6 w-6 text-emerald-300" />
                 4. Regulatory Compliance
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -159,7 +159,7 @@ export default function Disclaimer() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <AlertTriangle className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <AlertTriangle className="mr-2 h-6 w-6 text-emerald-300" />
                 5. Risk Disclosure
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -184,7 +184,7 @@ export default function Disclaimer() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <FileCode className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <FileCode className="mr-2 h-6 w-6 text-emerald-300" />
                 6. Governance and DAO Disclaimer
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -202,7 +202,7 @@ export default function Disclaimer() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <BarChart className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <BarChart className="mr-2 h-6 w-6 text-emerald-300" />
                 7. Forward-Looking Statements
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -220,7 +220,7 @@ export default function Disclaimer() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <Info className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <Info className="mr-2 h-6 w-6 text-emerald-300" />
                 8. Official Sources
               </h2>
               <p className="text-muted-foreground mb-4">
@@ -233,7 +233,7 @@ export default function Disclaimer() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <Info className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <Info className="mr-2 h-6 w-6 text-emerald-300" />
                 9. Acceptance of Terms
               </h2>
               <p className="text-muted-foreground mb-4">

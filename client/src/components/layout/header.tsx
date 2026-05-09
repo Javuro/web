@@ -8,39 +8,37 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Menu } from "lucide-react";
-import { useState } from "react";
 
 export default function Header() {
   const [location] = useLocation();
   const { account, connectWallet, disconnectWallet, isConnecting } = useWeb3();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const menuItems = [
     { path: "/", label: "Home" },
-    { path: "/about", label: "About" },
+    { path: "/about", label: "Vision" },
+    { path: "/mvp", label: "MVP" },
     { path: "/token", label: "Token" },
-    { path: "/whitepaper", label: "Technical Docs" },
-    { path: "/rewards", label: "Rewards" },
-    { path: "/mypage", label: "My Page" },
+    { path: "/whitepaper", label: "Docs" },
+    { path: "/community", label: "Community" },
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-sm border-b border-gray-800">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.12] bg-[#050807]/90 backdrop-blur-xl">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           <Link href="/">
-            <span className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3A86FF] to-[#FF6F61]">
-              JAVURO
+            <span className="flex cursor-pointer items-center gap-3 text-xl font-black text-white">
+              <span className="grid h-10 w-10 place-items-center bg-emerald-200 text-[#07110d]">J</span>
+              <span>JAVURO</span>
             </span>
           </Link>
 
-          {/* Desktop Menu */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden items-center border border-white/[0.12] bg-white/[0.035] px-2 py-1 lg:flex">
             {menuItems.map((item) => (
               <Link key={item.path} href={item.path}>
                 <span
-                  className={`text-sm hover:text-[#3A86FF] transition-colors cursor-pointer ${
-                    location === item.path ? "text-[#3A86FF]" : "text-gray-400"
+                  className={`inline-flex h-9 cursor-pointer items-center px-3 text-sm font-black transition-colors ${
+                    location === item.path ? "bg-emerald-200 text-[#07110d]" : "text-slate-400 hover:text-white"
                   }`}
                 >
                   {item.label}
@@ -49,25 +47,24 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-gray-400 hover:text-[#3A86FF]"
+                  className="text-slate-300 hover:bg-white/10 hover:text-white"
                 >
                   <Menu className="h-6 w-6" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-[200px] bg-black/90 backdrop-blur-sm border-2 border-gray-800">
+              <DropdownMenuContent align="end" className="w-[220px] border-white/10 bg-[#050807]/95 backdrop-blur-xl">
                 <div className="flex flex-col p-2">
                   {menuItems.map((item) => (
                     <Link key={item.path} href={item.path}>
                       <span
-                        className={`block px-4 py-2 text-sm rounded hover:bg-[#3A86FF]/10 cursor-pointer ${
-                          location === item.path ? "text-[#3A86FF]" : "text-gray-400"
+                        className={`block cursor-pointer px-4 py-2 text-sm font-black ${
+                          location === item.path ? "bg-emerald-200 text-[#07110d]" : "text-slate-300 hover:bg-white/10"
                         }`}
                       >
                         {item.label}
@@ -86,12 +83,12 @@ export default function Header() {
                   <Button
                     size="sm"
                     variant="outline"
-                    className="border-2 border-[#3A86FF] text-[#3A86FF] hover:bg-[#3A86FF]/10"
+                    className="border-white/[0.15] text-white hover:bg-white/10"
                   >
                     {`${account.slice(0, 6)}...${account.slice(-4)}`}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-80 p-4 bg-black/90 backdrop-blur-sm border-2 border-gray-800">
+                <DropdownMenuContent className="w-80 border-white/10 bg-[#050807]/95 p-4 backdrop-blur-xl">
                   <div className="flex flex-col gap-4">
                     <div className="space-y-2">
                       <h3 className="text-sm font-medium text-gray-400">
@@ -117,7 +114,7 @@ export default function Header() {
             ) : (
               <Button
                 size="sm"
-                className="bg-gradient-to-r from-[#3A86FF] to-[#3A86FF]/80"
+                className="h-11 bg-emerald-200 px-5 font-extrabold text-[#07110d] hover:bg-white"
                 onClick={() => connectWallet()}
                 disabled={isConnecting}
               >

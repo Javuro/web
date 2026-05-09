@@ -1,29 +1,29 @@
 {
   "common": {
     "home": "홈",
-    "about": "소개",
+    "about": "비전",
+    "mvp": "MVP",
     "token": "토큰",
     "rewards": "리워드",
-    "mypage": "마이페이지",
     "connectWallet": "지갑 연결",
     "connecting": "연결 중..."
   },
   "hero": {
-    "title": "Your Instant Journey. JAVURO.",
-    "subtitle": "실시간 위치 기반 추천과 커뮤니티 투표로 결정되는 지역, 그리고 혁신적인 Web3 토큰 생태계",
-    "downloadApp": "앱 다운로드",
+    "title": "Make human presence verifiable.",
+    "subtitle": "JAVURO는 현실 참여를 보상, 평판, 미래 유틸리티로 연결되는 신뢰 가능한 기록으로 만듭니다.",
+    "viewMvp": "MVP 범위 보기",
     "joinCommunity": "커뮤니티 참여하기",
     "viewToken": "JXRO 토큰 정보 보기"
   },
   "features": {
     "title": "핵심 기능",
     "location": {
-      "title": "실시간 위치 기반 추천",
-      "description": "사용자 주변 500m~1km 내 맛집, 카페, 이벤트 등 자동 추천"
+      "title": "현실 참여 표면",
+      "description": "참여가 발생할 수 있는 장소, 이벤트, 경로, 캠페인"
     },
     "chat": {
-      "title": "자동 단톡방",
-      "description": "추천 장소 도착 시 생성되는 즉각 소통 채팅방"
+      "title": "임시 참여 룸",
+      "description": "장소, 이벤트, 캠페인과 연결된 맥락형 커뮤니케이션"
     },
     "curation": {
       "title": "이중 큐레이션",
@@ -34,15 +34,15 @@
       "description": "사용자 투표 및 피드백으로 지역 및 이벤트 결정"
     },
     "token": {
-      "title": "하이브리드 토큰 (JXRO)",
-      "description": "보상, 프리미엄 결제, 스테이킹, 거버넌스 참여 지원"
+      "title": "JXRO 유틸리티",
+      "description": "보상, 접근권, 스테이킹, 거버넌스 참여 지원"
     }
   },
   "brandStory": {
-    "title": "브랜드 스토리",
-    "subtitle": "즉흥적인 여정과 혁신적인 경험을 연결하는 Web3 플랫폼",
-    "description1": "JAVURO는 사용자들이 언제 어디서나 즉흥적이고 즐거운 경험을 누릴 수 있도록 설계된 혁신적인 플랫폼입니다. 실시간 위치 기반 기술과 Web3 토큰 경제를 결합하여, 사용자들에게 새로운 차원의 경험을 제공합니다.",
-    "description2": "우리는 단순한 추천을 넘어, 커뮤니티의 참여와 토큰 보상을 통해 더욱 풍부하고 의미 있는 경험을 만들어가고 있습니다."
+    "title": "현실 참여 증명",
+    "subtitle": "검증된 참여를 먼저 만들고, 평판과 미래 유틸리티는 그 다음에 구축합니다.",
+    "description1": "JAVURO는 실제 장소, 실제 사용자, 체크인, 리뷰, 참여 기록에서 출발합니다.",
+    "description2": "참여 데이터가 충분히 검증되면 보상, 평판, 파트너 캠페인, 미래 유틸리티로 확장할 수 있습니다."
   },
   "language": {
     "ko": "한국어",

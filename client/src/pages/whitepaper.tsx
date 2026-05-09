@@ -1,271 +1,134 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { 
-  FileText, 
-  Download, 
-  Languages, 
-  History,
-  ScrollText,
-  MapPin,
-  MessageSquare,
-  Users,
-  Coins
-} from "lucide-react";
+import { ClipboardCheck, FileText, Layers, Scale, ShieldCheck } from "lucide-react";
+import { Link } from "wouter";
 
-// 백서 버전에 대한 타입 정의
-interface WhitepaperVersion {
-  version: string;
-  date: string;
-  language: string;
-  fileName?: string;
-  directDownloadUrl: string;
-  embeddedViewUrl: string;
-  fallbackViewUrl: string;
-}
+const WHITEPAPER_PDF = "/docs/JAVURO%20Whitepaper%20EN%200.4.1.pdf";
+const WHITEPAPER_DOCX = "/docs/JAVURO%20Whitepaper%20EN%200.4.1.docx";
 
-/**
- * 백서 버전 정보
- * 
- * 각 환경에 맞는 4가지 URL 형태를 제공:
- * 1. localFileName: 로컬 개발환경에서 사용할 파일 이름
- * 2. directDownloadUrl: 절대 경로로 배포 환경에서 직접 다운로드할 URL
- * 3. embeddedViewUrl: iframe에 직접 표시할 수 있는 URL (Google Drive PDF Viewer 사용)
- * 4. fallbackViewUrl: 대체 뷰어 URL (재시도용)
- */
-// 백서 기본 정보 정의
-const whitepaperInfo = {
-  version: "v0.3.1",
-  date: "April 2025",
-  language: "English",
-  fileName: "JAVURO Whitepaper EN 0.3.1.pdf"
-};
-
-const whitepaperSections = [
+const docs = [
   {
-    icon: <FileText className="h-8 w-8" />,
-    title: "Project Overview",
-    description: "Comprehensive overview of JAVURO's vision to combine real-time location-based services with Web3 functionality"
+    title: "Whitepaper v0.4.1",
+    body: "April 2026 draft covering Proof-of-Presence, Behavior Credit boundaries, token utility, roadmap, and legal disclaimers.",
+    icon: FileText,
+    href: WHITEPAPER_PDF,
+    external: true,
   },
   {
-    icon: <MapPin className="h-8 w-8" />,
-    title: "Location-Based Platform",
-    description: "Real-time recommendation system for places within 500m-1km radius, personalized by AI algorithms and human curation"
+    title: "MVP scope",
+    body: "The first product scope focuses on wallet onboarding, participation proof, contribution tasks, and reward eligibility.",
+    icon: ClipboardCheck,
+    href: "/mvp",
+    external: false,
   },
   {
-    icon: <MessageSquare className="h-8 w-8" />,
-    title: "Ephemeral Group Chat",
-    description: "Automatic creation of temporary group chats when users arrive at recommended locations, enabling real-time interaction"
+    title: "Ecosystem layers",
+    body: "Social layer, reward layer, reputation layer, and future utility are separated to avoid overstating finance features.",
+    icon: Layers,
+    href: "/about",
+    external: false,
   },
   {
-    icon: <Users className="h-8 w-8" />,
-    title: "Community Governance",
-    description: "User-driven platform development through voting mechanisms and community participation in decision-making"
+    title: "Compliance posture",
+    body: "Credit, escrow, and RWA language should remain in research or partner-pilot context until validation is complete.",
+    icon: Scale,
+    href: "/disclaimer",
+    external: false,
   },
-  {
-    icon: <Coins className="h-8 w-8" />,
-    title: "JXRO Token Economy",
-    description: "BNB Chain-based utility token functions, distribution structure, and reward mechanisms within the platform"
-  },
-  {
-    icon: <Languages className="h-8 w-8" />,
-    title: "Technical Architecture",
-    description: "Detailed explanation of the platform's infrastructure, including dual curation system and Web3 integration"
-  },
-  {
-    icon: <History className="h-8 w-8" />,
-    title: "Development Roadmap",
-    description: "Phased implementation plan from 2025 through 2026 with key milestones and technical deliverables"
-  }
 ];
 
 export default function Whitepaper() {
-  const [whitepaperVersions, setWhitepaperVersions] = useState<WhitepaperVersion[]>([]);
-  const [isLoaded, setIsLoaded] = useState(false);
-  
-  useEffect(() => {
-    // 클라이언트 사이드에서만 실행
-    if (typeof window === 'undefined') return;
-    
-    // 실행 환경에 따라 다른 URL 구조 사용 (개발용/프로덕션용)
-    const isProduction = import.meta.env.PROD;
-    const baseUrl = isProduction ? "https://javuro.com" : window.location.origin;
-    
-    // PDF 파일 경로
-    const pdfPath = `/docs/${encodeURIComponent(whitepaperInfo.fileName)}`;
-    
-    // 백서 파일 URL 설정
-    const versions: WhitepaperVersion[] = [{
-      version: whitepaperInfo.version,
-      date: whitepaperInfo.date,
-      language: whitepaperInfo.language,
-      directDownloadUrl: `${baseUrl}${pdfPath}`,
-      embeddedViewUrl: `https://docs.google.com/viewer?url=${encodeURIComponent(`${baseUrl}${pdfPath}`)}&embedded=true`,
-      fallbackViewUrl: `${baseUrl}${pdfPath}`
-    }];
-    
-    setWhitepaperVersions(versions);
-    setIsLoaded(true);
-  }, []);
-  
   return (
-    <div className="bg-background">
-      <main className="container mx-auto px-4 py-20">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            JAVURO Whitepaper
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Comprehensive overview of the JAVURO platform's vision, technical architecture, 
-            real-time location-based features, and JXRO token economy
-          </p>
-        </motion.div>
-
-        {/* Whitepaper Download Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mb-16"
-        >
-          <Card className="bg-gradient-to-r from-[#3A86FF]/10 to-[#FF6F61]/10 backdrop-blur-sm border-gray-800">
-            <CardContent className="p-8">
-              <div className="text-center mb-8">
-                <div className="inline-block p-4 rounded-full bg-[#3A86FF]/20 mb-4">
-                  <FileText className="h-10 w-10 text-[#3A86FF]" />
-                </div>
-                <h2 className="text-3xl font-bold mb-2">Whitepaper</h2>
-                <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Access the complete whitepaper detailing JAVURO's real-time location-based features, 
-                  ephemeral group chat system, community governance, and BNB Chain-based JXRO token utility.
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-1 gap-6 max-w-xl mx-auto">
-                {isLoaded && whitepaperVersions.length > 0 ? (
-                  whitepaperVersions.map((doc, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: index * 0.1 }}
-                    >
-                      <Card className="bg-card/70 backdrop-blur-md border-gray-800 hover:border-[#3A86FF]/50 transition-all duration-300">
-                        <CardContent className="p-6">
-                          <div className="flex justify-between items-center mb-4">
-                            <div>
-                              <h3 className="text-xl font-semibold">{doc.language}</h3>
-                              <p className="text-sm text-muted-foreground">Version {doc.version} • {doc.date}</p>
-                            </div>
-                            <div className="text-[#3A86FF]">
-                              <FileText className="h-6 w-6" />
-                            </div>
-                          </div>
-                          <div className="flex flex-col sm:flex-row gap-2">
-                            <Button 
-                              className="flex-1 bg-gradient-to-r from-[#3A86FF] to-[#FF6F61]/80"
-                              onClick={() => {
-                                // 절대 URL 사용 (Netlify 배포 환경에서 안정적으로 작동)
-                                window.open(doc.directDownloadUrl, '_blank');
-                              }}
-                            >
-                              <Download className="mr-2 h-4 w-4" />
-                              Download PDF
-                            </Button>
-                            <Button 
-                              className="flex-1 bg-gradient-to-r from-[#FF6F61] to-[#3A86FF]/80"
-                              onClick={() => {
-                                // 내장형 PDF 뷰어 페이지로 같은 창에서 이동
-                                window.location.href = `/embedded-pdf?url=${encodeURIComponent(doc.directDownloadUrl)}`;
-                              }}
-                            >
-                              <FileText className="mr-2 h-4 w-4" />
-                              View Online
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  ))
-                ) : (
-                  <div className="flex items-center justify-center p-8 w-full">
-                    <div className="flex flex-col items-center gap-4">
-                      <div className="w-12 h-12 border-4 border-t-[#3A86FF] border-r-[#FF6F61] border-b-[#3A86FF] border-l-[#FF6F61] rounded-full animate-spin"></div>
-                      <p className="text-muted-foreground text-sm">Loading whitepaper...</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        {/* Whitepaper Content Overview */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-16"
-        >
-          <h2 className="text-3xl font-bold mb-8 text-center">Whitepaper Content</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {whitepaperSections.map((section, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 + 0.2 }}
-              >
-                <Card className="h-full bg-card/50 backdrop-blur-sm hover:border-[#3A86FF]/50 transition-all duration-300">
-                  <CardContent className="p-6">
-                    <div className="mb-4 text-[#3A86FF]">{section.icon}</div>
-                    <h3 className="text-xl font-semibold mb-2">{section.title}</h3>
-                    <p className="text-muted-foreground">{section.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+    <div className="bg-[#f4f7f1] text-[#07110d]">
+      <section className="bg-[#050807] text-white">
+        <main className="container mx-auto grid min-h-[calc(100vh-5rem)] gap-12 px-4 py-20 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:py-28">
+          <div>
+            <p className="mb-6 text-sm font-black uppercase tracking-[0.28em] text-emerald-200">Docs</p>
+            <h1 className="text-6xl font-black uppercase leading-[0.82] md:text-8xl xl:text-9xl">
+              Reference, not fiction.
+            </h1>
           </div>
-        </motion.div>
+          <div className="border border-white/[0.12] p-8 md:p-10">
+            <p className="text-3xl font-black leading-tight text-emerald-100 md:text-5xl">
+              Technical documents for the participation network.
+            </p>
+            <p className="mt-6 text-lg leading-8 text-slate-300">
+              The current v0.4.1 draft frames JAVURO as a Proof-of-Presence network while keeping Behavior Credit, RWA,
+              escrow, and DeFi functionality subject to review and validation.
+            </p>
+          </div>
+        </main>
+      </section>
 
-        {/* Important Notice */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="max-w-4xl mx-auto"
-        >
-          <Card className="bg-gray-900/30 backdrop-blur-sm border-gray-800">
-            <CardContent className="p-6">
-              <h3 className="text-lg font-semibold mb-3">Important Notice</h3>
-              <p className="text-sm text-muted-foreground mb-3">
-                This whitepaper is presented for informational purposes only. It describes 
-                the JAVURO platform's vision, functionality, and planned technical developments.
-                The JXRO token is a utility token designed for use within the JAVURO ecosystem.
-              </p>
-              <p className="text-sm text-muted-foreground mb-4">
-                The document does not constitute any form of investment advice, solicitation, or 
-                offer to buy or sell any financial instruments. JXRO is not an investment product, 
-                security, or financial instrument. Implementation details and timelines described 
-                are subject to change based on technological developments, regulatory considerations, 
-                and other factors.
-              </p>
-              <div className="flex items-center justify-center mt-4 pt-3 border-t border-gray-800">
-                <p className="text-sm text-muted-foreground">
-                  For technical documentation inquiries: <a href="mailto:support@javuro.com" className="text-[#3A86FF] hover:underline">support@javuro.com</a>
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </main>
+      <section className="bg-[#f4f7f1]">
+        <div className="container mx-auto grid gap-px px-4 py-20 md:grid-cols-2 xl:grid-cols-4 lg:py-28">
+          {docs.map((doc, index) => {
+            const Icon = doc.icon;
+            const content = (
+              <article className="h-full min-h-[290px] border border-[#07110d]/[0.15] bg-[#f4f7f1] p-7 transition hover:bg-white">
+                <div className="mb-14 flex items-center justify-between">
+                  <Icon className="h-8 w-8 text-[#2d6b58]" />
+                  <span className="font-mono text-sm font-black text-[#ff765e]">{String(index + 1).padStart(2, "0")}</span>
+                </div>
+                <h2 className="text-3xl font-black">{doc.title}</h2>
+                <p className="mt-5 leading-7 text-[#42514b]">{doc.body}</p>
+              </article>
+            );
+
+            if (doc.external) {
+              return (
+                <a key={doc.title} href={doc.href} target="_blank" rel="noopener noreferrer">
+                  {content}
+                </a>
+              );
+            }
+
+            return (
+              <Link key={doc.title} href={doc.href}>
+                {content}
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="bg-[#9fffd5] text-[#07110d]">
+        <div className="container mx-auto grid gap-8 px-4 py-16 md:grid-cols-[1fr_auto] md:items-center">
+          <div>
+            <p className="mb-4 text-sm font-black uppercase tracking-[0.22em] text-[#2d6b58]">Current draft</p>
+            <h2 className="text-4xl font-black leading-[0.96] md:text-6xl">JAVURO Whitepaper EN 0.4.1</h2>
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-[#234238]">
+              This draft should be treated as the reference point for the website, pitch materials, and public
+              positioning.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <a href={WHITEPAPER_PDF} target="_blank" rel="noopener noreferrer" className="inline-flex h-14 items-center justify-center bg-[#07110d] px-6 font-black text-white">
+              Open PDF
+            </a>
+            <a href={WHITEPAPER_DOCX} className="inline-flex h-14 items-center justify-center border border-[#07110d]/20 px-6 font-black text-[#07110d]">
+              DOCX file
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white">
+        <div className="container mx-auto grid gap-10 px-4 py-20 lg:grid-cols-[0.75fr_1.25fr] lg:py-28">
+          <div>
+            <ShieldCheck className="mb-8 h-10 w-10 text-[#2d6b58]" />
+            <h2 className="text-5xl font-black leading-[0.94] md:text-7xl">Documentation stance</h2>
+          </div>
+          <div className="space-y-7 text-lg leading-8 text-[#42514b]">
+            <p>
+              The public site should now follow v0.4.1: Proof-of-Presence first, platform reputation next, and
+              programmable financial utility only after validation.
+            </p>
+            <p>
+              Behavior Credit should remain described as an internal reputation and contribution metric, not a regulated
+              consumer credit score or lending product.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

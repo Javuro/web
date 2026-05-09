@@ -106,7 +106,7 @@ export default function ViewPDF() {
             )}
             
             <Button
-              className="bg-gradient-to-r from-[#3A86FF] to-[#FF6F61]/80"
+              className="bg-gradient-to-r from-emerald-200 to-emerald-400/80"
               onClick={handleDownload}
             >
               <Download className="mr-2 h-4 w-4" />
@@ -130,7 +130,7 @@ export default function ViewPDF() {
               {originalUrl && (
                 <div className="flex flex-col gap-4">
                   <Button
-                    className="bg-gradient-to-r from-[#3A86FF] to-[#FF6F61]/80"
+                    className="bg-gradient-to-r from-emerald-200 to-emerald-400/80"
                     onClick={() => window.open(originalUrl, '_blank')}
                   >
                     <ExternalLink className="mr-2 h-4 w-4" />

@@ -343,7 +343,7 @@ export default function AdminPosts() {
                 </Select>
               </div>
               <Button 
-                className="bg-[#3A86FF] hover:bg-[#3A86FF]/80"
+                className="bg-emerald-300 hover:bg-emerald-300/80"
                 onClick={handleCreateClick}
               >
                 <Plus className="h-4 w-4 mr-2" />
@@ -385,7 +385,7 @@ export default function AdminPosts() {
                         <TableCell className="font-medium">
                           <div className="flex items-center gap-2">
                             {post.isPinned && (
-                              <Badge variant="outline" className="bg-[#3A86FF]/10 text-[#3A86FF]">
+                              <Badge variant="outline" className="bg-emerald-300/10 text-emerald-300">
                                 Pinned
                               </Badge>
                             )}

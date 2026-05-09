@@ -1,55 +1,37 @@
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Link } from "wouter";
-import {
-  Coins,
-  ShieldCheck,
-  BarChart3,
-  Copy,
-  ExternalLink,
-  MessageSquare,
-  ThumbsUp,
-  Users
-} from "lucide-react";
+import { BadgeCheck, Copy, ExternalLink, ShieldCheck, Sparkles, Users, WalletCards } from "lucide-react";
 
-const tokenFeatures = [
+const CONTRACT_ADDRESS = "0x92040BcFEF87Ddfe2B7a571E1D804ED064b851f1";
+const TOTAL_SUPPLY = "10,000,000,000";
+const EXPLORER_URL = "https://bscscan.com/token/" + CONTRACT_ADDRESS;
+
+const utilities = [
   {
-    icon: <Coins className="h-8 w-8" />,
-    title: "Platform Utility",
-    description: "In-app features access, community participation, premium services",
+    title: "Participation rewards",
+    body: "JXRO can recognize verified actions such as check-ins, reviews, missions, and campaign completion.",
+    icon: Sparkles,
   },
   {
-    icon: <Users className="h-8 w-8" />,
-    title: "Community Engagement",
-    description: "Participation in platform activities and contribution recognition",
+    title: "Platform access",
+    body: "The token supports premium access, ecosystem participation, and future utility inside JAVURO.",
+    icon: WalletCards,
   },
   {
-    icon: <ShieldCheck className="h-8 w-8" />,
-    title: "Secure Technology",
-    description: "Smart contract-based secure technology implementation",
-  },
-  {
-    icon: <MessageSquare className="h-8 w-8" />,
-    title: "Feedback Participation",
-    description: "Opportunity to provide suggestions for platform improvements",
-  },
-  {
-    icon: <ThumbsUp className="h-8 w-8" />,
-    title: "Ecosystem Balance",
-    description: "Self-regulating ecosystem design to maintain utility functionality",
-  },
-  {
-    icon: <BarChart3 className="h-8 w-8" />,
-    title: "Transparency",
-    description: "Regular technical reports and operational updates",
+    title: "Community governance",
+    body: "JXRO can support community input and ecosystem coordination as the network matures.",
+    icon: Users,
   },
 ];
 
-const CONTRACT_ADDRESS = "0x92040BcFEF87Ddfe2B7a571E1D804ED064b851f1"; // JXRO Contract Address
-const TOTAL_SUPPLY = "10,000,000,000";
-const EXPLORER_URL = "https://bscscan.com/token/" + CONTRACT_ADDRESS;
+const allocation = [
+  ["Founder & Team", "20%"],
+  ["Community & Ecosystem Rewards", "33%"],
+  ["Strategic Partnerships", "20%"],
+  ["IEO / Launchpad", "5%"],
+  ["Liquidity & Operations", "15%"],
+  ["Marketing & Partnerships", "4%"],
+  ["Reserve", "3%"],
+];
 
 export default function Token() {
   const { toast } = useToast();
@@ -57,300 +39,125 @@ export default function Token() {
   const handleCopyAddress = () => {
     navigator.clipboard.writeText(CONTRACT_ADDRESS);
     toast({
-      title: "Address Copied",
-      description: "Contract address has been copied to clipboard",
+      title: "Address copied",
+      description: "The JXRO contract address has been copied.",
     });
   };
 
-  // We no longer need handleLearnMore as we're using Link component directly
-
   return (
-    <div className="bg-background">
-      <main className="container mx-auto px-4 py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            JXRO Token
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A BNB Chain-based utility token powering the JAVURO ecosystem
-          </p>
-        </motion.div>
+    <div className="bg-[#f4f7f1] text-[#07110d]">
+      <section className="bg-[#050807] text-white">
+        <main className="container mx-auto grid min-h-[calc(100vh-5rem)] gap-12 px-4 py-20 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:py-28">
+          <div>
+            <p className="mb-6 text-sm font-black uppercase tracking-[0.28em] text-emerald-200">JXRO token</p>
+            <h1 className="text-6xl font-black uppercase leading-[0.82] md:text-8xl xl:text-9xl">
+              Utility, not hype.
+            </h1>
+          </div>
+          <div className="border border-white/[0.12] p-8 md:p-10">
+            <p className="text-3xl font-black leading-tight text-emerald-100 md:text-5xl">
+              A BEP-20 utility token for verified participation.
+            </p>
+            <p className="mt-6 text-lg leading-8 text-slate-300">
+              JXRO is positioned as platform utility for rewards, access, staking, governance, and ecosystem coordination.
+            </p>
+          </div>
+        </main>
+      </section>
 
-        {/* Token Information Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto mb-16"
-        >
-          <Card className="bg-card/50 backdrop-blur-sm border-gray-800">
-            <CardContent className="p-8">
-              <h2 className="text-2xl font-bold mb-6">Token Information</h2>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Contract Address</span>
-                  <div className="flex items-center gap-2">
-                    <code className="bg-gray-800/50 px-2 py-1 rounded text-sm">
-                      {CONTRACT_ADDRESS.slice(0, 6)}...{CONTRACT_ADDRESS.slice(-4)}
-                    </code>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8"
-                      onClick={handleCopyAddress}
-                    >
-                      <Copy className="h-4 w-4" />
-                    </Button>
-                    <a
-                      href={EXPLORER_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#3A86FF] hover:text-[#3A86FF]/80"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Total Supply</span>
-                  <span>{TOTAL_SUPPLY} JXRO</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Network</span>
-                  <span>BNB Chain (BSC)</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Token Type</span>
-                  <span>BEP-20</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+      <section className="border-b border-[#07110d]/[0.15] bg-white">
+        <div className="container mx-auto px-4 py-20 lg:py-28">
+          <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="mb-5 text-sm font-black uppercase tracking-[0.22em] text-[#2d6b58]">Contract</p>
+              <h2 className="text-5xl font-black leading-[0.94] md:text-7xl">BNB Chain utility layer.</h2>
+            </div>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={handleCopyAddress}
+                className="inline-flex h-12 items-center justify-center gap-2 border border-[#07110d]/[0.15] px-4 font-black text-[#07110d] hover:bg-[#07110d] hover:text-white"
+              >
+                <Copy className="h-4 w-4" />
+                Copy
+              </button>
+              <a
+                href={EXPLORER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 items-center justify-center gap-2 bg-[#07110d] px-4 font-black text-white hover:bg-[#2d6b58]"
+              >
+                BscScan
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-          {tokenFeatures.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-            >
-              <Card className="h-full bg-card/50 backdrop-blur-sm hover:border-[#3A86FF]/50 transition-all duration-300">
-                <CardContent className="p-6">
-                  <div className="mb-4 text-[#3A86FF]">{feature.icon}</div>
-                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                  <p className="text-muted-foreground">{feature.description}</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+          <div className="grid gap-px border border-[#07110d]/[0.15] bg-[#07110d]/[0.15] md:grid-cols-[1.4fr_0.8fr_0.8fr]">
+            <div className="bg-white p-6">
+              <span className="text-sm font-black uppercase tracking-[0.18em] text-[#2d6b58]">Contract address</span>
+              <p className="mt-4 break-all font-mono text-lg font-black">{CONTRACT_ADDRESS}</p>
+            </div>
+            <div className="bg-white p-6">
+              <span className="text-sm font-black uppercase tracking-[0.18em] text-[#2d6b58]">Supply</span>
+              <p className="mt-4 text-3xl font-black">{TOTAL_SUPPLY}</p>
+            </div>
+            <div className="bg-white p-6">
+              <span className="text-sm font-black uppercase tracking-[0.18em] text-[#2d6b58]">Network</span>
+              <p className="mt-4 text-3xl font-black">BNB Chain</p>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="max-w-4xl mx-auto mb-16"
-        >
-          <Card>
-            <CardContent className="p-8">
-              <h2 className="text-2xl font-bold mb-6 text-center">Token Allocation Framework</h2>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span>Founder & Team Allocation</span>
-                  <span className="font-semibold">20%</span>
+      <section className="bg-[#f4f7f1]">
+        <div className="container mx-auto grid gap-px px-4 py-20 md:grid-cols-3 lg:py-28">
+          {utilities.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <article key={item.title} className="border border-[#07110d]/[0.15] bg-[#f4f7f1] p-7 md:p-8">
+                <div className="mb-14 flex items-center justify-between">
+                  <Icon className="h-8 w-8 text-[#2d6b58]" />
+                  <span className="font-mono text-sm font-black text-[#ff765e]">{String(index + 1).padStart(2, "0")}</span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span>Community & Ecosystem Rewards</span>
-                  <span className="font-semibold">33%</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span>Strategic Partnerships</span>
-                  <span className="font-semibold">20%</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span>IEO / Launchpad</span>
-                  <span className="font-semibold">5%</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span>Liquidity & Operational Expenses</span>
-                  <span className="font-semibold">15%</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span>Marketing & Partnerships</span>
-                  <span className="font-semibold">4%</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span>Reserve</span>
-                  <span className="font-semibold">3%</span>
-                </div>
-              </div>
-              <p className="mt-6 text-sm text-muted-foreground">
-                <span className="font-medium">Note:</span> All allocations are subject to lock-up (vesting) conditions to prevent market disruption and ensure long-term incentives.
-              </p>
-            </CardContent>
-          </Card>
-        </motion.div>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="max-w-4xl mx-auto mb-16"
-        >
-          <Card>
-            <CardContent className="p-8">
-              <h2 className="text-2xl font-bold mb-6">JXRO Token Utility</h2>
-              
-              <div className="mb-8">
-                <h3 className="text-xl font-semibold mb-3">Application-Focused Token</h3>
-                <p className="text-muted-foreground mb-4">
-                  JXRO serves as a functional component within the JAVURO platform ecosystem. 
-                  It facilitates platform activities such as community engagement, access to premium features,
-                  and participation in platform improvement suggestions.
-                </p>
-                <p className="text-muted-foreground">
-                  The token is designed primarily for platform utility purposes with distribution to
-                  various ecosystem participants according to a carefully planned allocation framework to
-                  maintain platform functionality and stability.
-                </p>
-              </div>
-              
-              <div className="mb-8">
-                <h3 className="text-xl font-semibold mb-3">Token Distribution Information</h3>
-                <div className="space-y-2 mb-4">
-                  <div className="grid grid-cols-3 gap-2 text-sm">
-                    <div className="font-medium">Allocation</div>
-                    <div className="font-medium">Percentage</div>
-                    <div className="font-medium">Purpose</div>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-2 text-sm">
-                    <div>Founder & Team</div>
-                    <div>20%</div>
-                    <div>Subject to lock-up and vesting conditions</div>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-2 text-sm">
-                    <div>Community & Ecosystem</div>
-                    <div>33%</div>
-                    <div>Check-ins, reviews, event hosting, content curation, and DAO voting</div>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-2 text-sm">
-                    <div>Strategic Partnerships</div>
-                    <div>20%</div>
-                    <div>VC, OTC, and DAO-based strategic partners and contributors</div>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-2 text-sm">
-                    <div>IEO / Launchpad</div>
-                    <div>5%</div>
-                    <div>Public participation opportunities via exchange launchpads</div>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-2 text-sm">
-                    <div>Liquidity & Operations</div>
-                    <div>15%</div>
-                    <div>CEX/DEX listings, operational costs, and infrastructure</div>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-2 text-sm">
-                    <div>Marketing & Partnerships</div>
-                    <div>4%</div>
-                    <div>User acquisition, viral expansion, and local partnerships</div>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-2 text-sm">
-                    <div>Reserve</div>
-                    <div>3%</div>
-                    <div>DAO proposals, technical flexibility, and emergency situations</div>
-                  </div>
-                </div>
-                
-                <div className="mt-4 p-4 bg-gray-900/30 rounded-lg text-sm text-muted-foreground">
-                  <p className="font-medium mb-2">Lock-Up & Vesting Structure:</p>
-                  <p className="mb-2">All token allocations are subject to lock-up (vesting) conditions to prevent market disruption caused by sudden mass sell-offs, ensuring long-term incentives for all participants. The Founder & Team allocation follows a structured vesting schedule with specific unlock triggers based on platform milestones.</p>
-                  <p className="mb-2">Community & Ecosystem tokens will be distributed gradually over 5 to 7 years via smart contract-based automatic distribution systems. Strategic Partnership allocations are subject to full lock-up followed by vesting periods ranging from 6 to 12 months.</p>
-                </div>
-                
-                <div className="mt-4 p-4 bg-gray-900/30 rounded-lg text-sm text-muted-foreground">
-                  <p className="font-medium mb-2">Important Notice:</p>
-                  <p>JXRO tokens are utility tokens designed specifically for use within the JAVURO platform ecosystem. They are not designed as investment vehicles and do not represent any ownership rights, profit sharing, or expectation of financial returns. Token distribution is structured to support platform functionality and user engagement.</p>
-                </div>
-              </div>
-              
-              <div>
-                <h3 className="text-xl font-semibold mb-3">JXRO Usage Within Platform</h3>
-                <p className="text-muted-foreground mb-4">
-                  JXRO facilitates various platform activities and enhances user engagement with JAVURO features.
-                </p>
-                
-                <div className="mb-4">
-                  <h4 className="font-medium mb-2">Platform Utility:</h4>
-                  <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
-                    <li>Access to in-app premium features (advanced content, customization options)</li>
-                    <li>Platform participation recognition</li>
-                    <li>Content curation and quality contributions</li>
-                    <li>Community benefits and platform integrations</li>
-                    <li>Feedback mechanism for platform improvement suggestions</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium mb-2">Platform Activity:</h4>
-                  <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
-                    <li>Recognition for beneficial contributions to the platform</li>
-                    <li>Technical distribution mechanisms to maintain token utility</li>
-                    <li>Functional distribution through platform activities</li>
-                    <li>Example: Users contribute to platform quality through content curation</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="max-w-4xl mx-auto mb-12 bg-gradient-to-r from-[#3A86FF]/10 to-[#FF6F61]/10 p-8 rounded-lg"
-        >
-          <h3 className="text-xl font-semibold mb-3 text-center">The JAVURO Platform</h3>
-          <p className="text-center text-muted-foreground">
-            JAVURO provides a real-time location-based social platform experience with integrated utility features.
-            Our technology delivers precise recommendations within a 500m-1km radius and ephemeral group chats,
-            creating meaningful connections between digital engagement and real-world activities through 
-            our BNB Chain-powered ecosystem.
-          </p>
-          <p className="text-center text-sm mt-4 text-muted-foreground">
-            This information is for educational purposes only and does not constitute financial advice or an offer to sell securities.
-          </p>
-        </motion.div>
+                <h2 className="text-3xl font-black">{item.title}</h2>
+                <p className="mt-5 leading-7 text-[#42514b]">{item.body}</p>
+              </article>
+            );
+          })}
+        </div>
+      </section>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center mt-12"
-        >
-          <Link href="/whitepaper">
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-[#3A86FF] to-[#FF6F61]/80"
-            >
-              Technical Documentation
-            </Button>
-          </Link>
-        </motion.div>
-      </main>
+      <section className="bg-[#07110d] text-white">
+        <div className="container mx-auto grid gap-10 px-4 py-20 lg:grid-cols-[0.82fr_1.18fr] lg:py-28">
+          <div>
+            <ShieldCheck className="mb-8 h-10 w-10 text-emerald-200" />
+            <h2 className="text-5xl font-black leading-[0.94] md:text-7xl">Allocation framework</h2>
+            <p className="mt-7 max-w-xl text-lg leading-8 text-slate-300">
+              Allocations are subject to lock-up and operational disclosure policies.
+            </p>
+          </div>
+          <div className="grid gap-px border border-white/[0.12] bg-white/[0.12]">
+            {allocation.map(([label, value]) => (
+              <div key={label} className="flex items-center justify-between bg-[#07110d] p-5">
+                <span className="font-black text-slate-200">{label}</span>
+                <strong className="text-2xl text-emerald-200">{value}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#9fffd5] text-[#07110d]">
+        <div className="container mx-auto px-4 py-16">
+          <BadgeCheck className="mb-8 h-9 w-9" />
+          <h2 className="max-w-4xl text-4xl font-black leading-[0.96] md:text-6xl">Utility, not investment positioning.</h2>
+          <p className="mt-6 max-w-3xl text-lg leading-8 text-[#234238]">
+            JXRO should be described as a functional component of the JAVURO ecosystem, not as a promise of profit,
+            yield, or financial return.
+          </p>
+        </div>
+      </section>
     </div>
   );
 }

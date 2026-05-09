@@ -72,8 +72,8 @@ export default function AdminPanel() {
             <Card className="bg-card/50 backdrop-blur-sm border-gray-800">
               <CardHeader>
                 <div className="flex items-center justify-center mb-4">
-                  <div className="bg-[#3A86FF]/10 p-3 rounded-full">
-                    <Lock className="h-6 w-6 text-[#3A86FF]" />
+                  <div className="bg-emerald-300/10 p-3 rounded-full">
+                    <Lock className="h-6 w-6 text-emerald-300" />
                   </div>
                 </div>
                 <CardTitle className="text-center">Admin Authentication</CardTitle>
@@ -92,7 +92,7 @@ export default function AdminPanel() {
                     {error && <p className="text-destructive text-sm mt-2">{error}</p>}
                   </div>
                   <Button 
-                    className="w-full bg-gradient-to-r from-[#3A86FF] to-[#FF6F61]"
+                    className="w-full bg-gradient-to-r from-emerald-200 to-emerald-400"
                     onClick={handleAuth}
                   >
                     Authenticate
@@ -116,7 +116,7 @@ export default function AdminPanel() {
               {adminFeatures.map((feature, index) => (
                 <Card 
                   key={index}
-                  className="bg-card/50 backdrop-blur-sm border-gray-800 hover:border-[#3A86FF]/50 transition-colors duration-300"
+                  className="bg-card/50 backdrop-blur-sm border-gray-800 hover:border-emerald-300/50 transition-colors duration-300"
                 >
                   <CardHeader>
                     <CardTitle>{feature.name}</CardTitle>

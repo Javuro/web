@@ -1,29 +1,29 @@
 {
   "common": {
     "home": "Home",
-    "about": "About",
+    "about": "Vision",
+    "mvp": "MVP",
     "token": "Token",
     "rewards": "Rewards",
-    "mypage": "My Page",
     "connectWallet": "Connect Wallet",
     "connecting": "Connecting..."
   },
   "hero": {
-    "title": "Your Instant Journey. JAVURO.",
-    "subtitle": "A revolutionary Web3 ecosystem with real-time location-based recommendations, community voting, and innovative token economics",
-    "downloadApp": "Download App",
+    "title": "Make human presence verifiable.",
+    "subtitle": "JAVURO turns real-world participation into reliable records for rewards, reputation, and future utility.",
+    "viewMvp": "View MVP Scope",
     "joinCommunity": "Join Community",
     "viewToken": "View JXRO Token"
   },
   "features": {
     "title": "Core Features",
     "location": {
-      "title": "Real-time Location Based",
-      "description": "Automatic recommendations for restaurants, cafes, and events within 500m-1km"
+      "title": "Real-world surfaces",
+      "description": "Places, events, routes, and campaigns where participation can happen"
     },
     "chat": {
-      "title": "Auto Group Chat",
-      "description": "Instant communication channels created upon arrival at recommended locations"
+      "title": "Temporary rooms",
+      "description": "Contextual rooms connected to places, events, or campaigns"
     },
     "curation": {
       "title": "Dual Curation",
@@ -34,15 +34,15 @@
       "description": "Areas and events determined by user votes and feedback"
     },
     "token": {
-      "title": "Hybrid Token (JXRO)",
-      "description": "Supports rewards, premium payments, staking, and governance participation"
+      "title": "JXRO utility",
+      "description": "Supports rewards, access, staking, and governance participation"
     }
   },
   "brandStory": {
-    "title": "Brand Story",
-    "subtitle": "Connecting Spontaneous Journeys with Web3 Innovation",
-    "description1": "JAVURO is an innovative platform designed to provide users with spontaneous and enjoyable experiences anytime, anywhere. By combining real-time location-based technology with Web3 token economics, we offer users a new dimension of experience.",
-    "description2": "Beyond simple recommendations, we're creating richer and more meaningful experiences through community participation and token rewards."
+    "title": "Proof of Real-World Participation",
+    "subtitle": "Verified participation first. Behavior credit later.",
+    "description1": "JAVURO starts with real locations, real people, check-ins, reviews, and live participation records.",
+    "description2": "As participation data matures, the network can support reputation, partner settlement, and future utility."
   },
   "language": {
     "ko": "한국어",

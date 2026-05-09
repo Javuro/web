@@ -1,257 +1,95 @@
-import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  MapPin,
-  Star,
-  Users,
-  Award,
-  Gift,
-  Crown,
-  BookOpen,
-  Coins,
-  TrendingUp,
-  Shield,
-  Zap,
-  HelpCircle
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
+import { BadgeCheck, MapPin, Repeat, ShieldCheck, Sparkles, Users } from "lucide-react";
 
-const activityRewards = [
+const rewardSignals = [
   {
-    icon: <MapPin className="h-8 w-8" />,
-    title: "Check-in Rewards",
-    description: "Earn JXRO tokens automatically when visiting recommended locations"
+    title: "Check-ins",
+    body: "A visit becomes useful only when the arrival can be verified.",
+    icon: MapPin,
   },
   {
-    icon: <Star className="h-8 w-8" />,
-    title: "Content Contribution",
-    description: "Get rewarded for writing reviews, sharing photos, and event feedback"
+    title: "Participation",
+    body: "Events, live rooms, reviews, and campaign completion create rewardable activity.",
+    icon: Users,
   },
   {
-    icon: <Users className="h-8 w-8" />,
-    title: "Event Participation",
-    description: "Receive tokens for participating in app events and meetups"
-  }
+    title: "Reliability",
+    body: "Repeated, consistent behavior can support reputation and access over time.",
+    icon: Repeat,
+  },
 ];
 
-const communityRewards = [
-  {
-    icon: <Crown className="h-8 w-8" />,
-    title: "Community Voting",
-    description: "Earn rewards through proposal submissions and voting participation"
-  },
-  {
-    icon: <BookOpen className="h-8 w-8" />,
-    title: "Curator Rewards",
-    description: "Monthly bonuses for selected outstanding curators"
-  },
-  {
-    icon: <Gift className="h-8 w-8" />,
-    title: "Referral Rewards",
-    description: "Get rewarded for inviting friends and promoting new sign-ups"
-  }
+const guardrails = [
+  "Rewards are utility-driven and tied to platform participation.",
+  "Financial return, price performance, or guaranteed yield is not promised.",
+  "Future reputation and settlement features require data, legal, and partner validation.",
 ];
 
 export default function Rewards() {
-  const { toast } = useToast();
-
-  const handleRewardsGuide = () => {
-    toast({
-      title: "Coming Soon",
-      description: "The rewards guide is being updated with new features and will be available soon.",
-    });
-  };
-
   return (
-    <div className="bg-background">
-      <main className="container mx-auto px-4 py-20">
-        {/* Header Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            JAVURO Rewards
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Earn JXRO tokens through various activities and unlock exclusive benefits
+    <div className="bg-[#f4f7f1] text-[#07110d]">
+      <section className="bg-[#050807] text-white">
+        <main className="container mx-auto grid min-h-[calc(100vh-5rem)] gap-12 px-4 py-20 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:py-28">
+          <div>
+            <p className="mb-6 text-sm font-black uppercase tracking-[0.28em] text-emerald-200">Rewards</p>
+            <h1 className="text-6xl font-black uppercase leading-[0.82] md:text-8xl xl:text-9xl">
+              Rewards follow proof.
+            </h1>
+          </div>
+          <div className="border border-white/[0.12] p-8 md:p-10">
+            <p className="text-3xl font-black leading-tight text-emerald-100 md:text-5xl">
+              JXRO rewards should reinforce real activity.
+            </p>
+            <p className="mt-6 text-lg leading-8 text-slate-300">
+              Showing up, joining, contributing, completing, and returning should matter more than passive impressions.
+            </p>
+          </div>
+        </main>
+      </section>
+
+      <section className="bg-[#f4f7f1]">
+        <div className="container mx-auto grid gap-px px-4 py-20 md:grid-cols-3 lg:py-28">
+          {rewardSignals.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <article key={item.title} className="border border-[#07110d]/[0.15] bg-[#f4f7f1] p-7 md:p-8">
+                <div className="mb-14 flex items-center justify-between">
+                  <Icon className="h-8 w-8 text-[#2d6b58]" />
+                  <span className="font-mono text-sm font-black text-[#ff765e]">{String(index + 1).padStart(2, "0")}</span>
+                </div>
+                <h2 className="text-3xl font-black">{item.title}</h2>
+                <p className="mt-5 leading-7 text-[#42514b]">{item.body}</p>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="bg-[#07110d] text-white">
+        <div className="container mx-auto grid gap-10 px-4 py-20 lg:grid-cols-[0.75fr_1.25fr] lg:py-28">
+          <div>
+            <ShieldCheck className="mb-8 h-10 w-10 text-emerald-200" />
+            <h2 className="text-5xl font-black leading-[0.94] md:text-7xl">Reward guardrails</h2>
+          </div>
+          <div className="grid gap-px border border-white/[0.12] bg-white/[0.12]">
+            {guardrails.map((item) => (
+              <div key={item} className="flex gap-4 bg-[#07110d] p-6">
+                <BadgeCheck className="mt-1 h-5 w-5 shrink-0 text-emerald-200" />
+                <p className="text-lg font-black leading-7 text-slate-200">{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#9fffd5] text-[#07110d]">
+        <div className="container mx-auto px-4 py-16">
+          <Sparkles className="mb-8 h-9 w-9" />
+          <h2 className="max-w-4xl text-4xl font-black leading-[0.96] md:text-6xl">Participation first. Speculation never.</h2>
+          <p className="mt-6 max-w-3xl text-lg leading-8 text-[#234238]">
+            The reward layer is designed to make the product more useful, not to create investment expectations.
           </p>
-        </motion.div>
-
-        {/* Activity Rewards Section */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-8">Activity Rewards</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {activityRewards.map((reward, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-              >
-                <Card className="h-full bg-card/50 backdrop-blur-sm hover:border-[#3A86FF]/50 transition-all duration-300">
-                  <CardContent className="p-6">
-                    <div className="mb-4 text-[#3A86FF]">{reward.icon}</div>
-                    <h3 className="text-xl font-semibold mb-2">{reward.title}</h3>
-                    <p className="text-muted-foreground">{reward.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
         </div>
-
-        {/* Community Rewards Section */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-8">Community Rewards</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {communityRewards.map((reward, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-              >
-                <Card className="h-full bg-card/50 backdrop-blur-sm hover:border-[#3A86FF]/50 transition-all duration-300">
-                  <CardContent className="p-6">
-                    <div className="mb-4 text-[#3A86FF]">{reward.icon}</div>
-                    <h3 className="text-xl font-semibold mb-2">{reward.title}</h3>
-                    <p className="text-muted-foreground">{reward.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Reward Mechanism Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mb-16"
-        >
-          <Card className="bg-card/50 backdrop-blur-sm">
-            <CardContent className="p-8">
-              <div className="flex items-center gap-4 mb-6">
-                <Shield className="h-8 w-8 text-[#3A86FF]" />
-                <h2 className="text-3xl font-bold">Reward Distribution Mechanism</h2>
-              </div>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Automatic Distribution System</h3>
-                  <p className="text-muted-foreground">
-                    We operate a secure and transparent reward system through smart contracts
-                    with regular security audits and automated reward distribution.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Settlement and Verification</h3>
-                  <p className="text-muted-foreground">
-                    Monitor your accumulated rewards, remaining tokens, and staking status
-                    in real-time through weekly and monthly settlements.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        {/* Level and Staking Rewards */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <Card className="h-full bg-card/50 backdrop-blur-sm hover:border-[#3A86FF]/50 transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="flex items-center gap-4 mb-6">
-                  <Zap className="h-8 w-8 text-[#3A86FF]" />
-                  <h3 className="text-2xl font-semibold">Level System</h3>
-                </div>
-                <ul className="space-y-4 text-muted-foreground">
-                  <li>• Level progression based on activity</li>
-                  <li>• Bonus tokens for each level</li>
-                  <li>• Special benefits and limited NFTs</li>
-                  <li>• Tiered rewards by level</li>
-                </ul>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <Card className="h-full bg-card/50 backdrop-blur-sm hover:border-[#3A86FF]/50 transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="flex items-center gap-4 mb-6">
-                  <TrendingUp className="h-8 w-8 text-[#3A86FF]" />
-                  <h3 className="text-2xl font-semibold">Staking Rewards</h3>
-                </div>
-                <ul className="space-y-4 text-muted-foreground">
-                  <li>• Additional rewards for token staking</li>
-                  <li>• Long-term staking incentives</li>
-                  <li>• Tiered benefits by staking amount</li>
-                  <li>• Automatic staking rewards</li>
-                </ul>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-
-        {/* Support and Information */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center"
-        >
-          <Card className="bg-card/50 backdrop-blur-sm">
-            <CardContent className="p-8">
-              <HelpCircle className="h-16 w-16 mx-auto mb-6 text-[#3A86FF]" />
-              <h2 className="text-2xl font-semibold mb-4">Support & Information</h2>
-              <p className="text-muted-foreground mb-6">
-                Our reward system guide is currently being updated with new features and comprehensive information.
-                For any inquiries, please reach out through our email support.
-              </p>
-              <div className="flex justify-center gap-4">
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-[#3A86FF] to-[#3A86FF]/80"
-                  onClick={handleRewardsGuide}
-                >
-                  <BookOpen className="mr-2 h-5 w-5" />
-                  Rewards Guide
-                </Button>
-                <a
-                  href="mailto:support@javuro.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-2 border-[#3A86FF] text-[#3A86FF] hover:bg-[#3A86FF]/10"
-                  >
-                    <HelpCircle className="mr-2 h-5 w-5" />
-                    Contact Support
-                  </Button>
-                </a>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </main>
+      </section>
     </div>
   );
 }
