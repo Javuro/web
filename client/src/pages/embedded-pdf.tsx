@@ -99,7 +99,7 @@ export default function EmbeddedPDF() {
                 </Button>
                 
                 <Button
-                  className="bg-gradient-to-r from-[#3A86FF] to-[#FF6F61]/80"
+                  className="bg-gradient-to-r from-emerald-200 to-emerald-400/80"
                   onClick={handleDownload}
                 >
                   <Download className="mr-2 h-4 w-4" />
@@ -127,7 +127,7 @@ export default function EmbeddedPDF() {
               {directPdfUrl && (
                 <div className="flex flex-col gap-4">
                   <Button 
-                    className="bg-gradient-to-r from-[#3A86FF] to-[#FF6F61]/80"
+                    className="bg-gradient-to-r from-emerald-200 to-emerald-400/80"
                     onClick={openInBrowser}
                   >
                     <ExternalLink className="mr-2 h-4 w-4" />
@@ -139,7 +139,7 @@ export default function EmbeddedPDF() {
           ) : isLoading ? (
             <div className="w-full h-full flex items-center justify-center">
               <div className="flex flex-col items-center gap-4">
-                <div className="w-12 h-12 border-4 border-t-[#3A86FF] border-r-[#FF6F61] border-b-[#3A86FF] border-l-[#FF6F61] rounded-full animate-spin"></div>
+                <div className="w-12 h-12 border-4 border-t-[#A7F3D0] border-r-[#34D399] border-b-[#A7F3D0] border-l-[#34D399] rounded-full animate-spin"></div>
                 <p className="text-muted-foreground">Loading whitepaper...</p>
               </div>
             </div>

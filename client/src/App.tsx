@@ -5,11 +5,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { Web3Provider } from "@/lib/web3/context";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
-import Download from "@/pages/download";
 import Community from "@/pages/community";
 import Token from "@/pages/token";
-import MyPage from "@/pages/mypage";
 import About from "@/pages/about";
+import Mvp from "@/pages/mvp";
 import Rewards from "@/pages/rewards";
 import Disclaimer from "@/pages/disclaimer";
 import Terms from "@/pages/terms";
@@ -17,7 +16,6 @@ import Privacy from "@/pages/privacy";
 import Whitepaper from "@/pages/whitepaper";
 import ViewPDF from "@/pages/view-pdf";
 import EmbeddedPDF from "@/pages/embedded-pdf";
-import TestWallet from "@/pages/test-wallet";
 import AdminPanel from "@/pages/admin/index";
 import AdminPosts from "@/pages/admin/posts";
 import Header from "@/components/layout/header";
@@ -103,15 +101,13 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/about" component={About} />
-          <Route path="/download" component={Download} />
+          <Route path="/mvp" component={Mvp} />
           <Route path="/community" component={Community} />
           <Route path="/token" component={Token} />
           <Route path="/rewards" component={Rewards} />
-          <Route path="/mypage" component={MyPage} />
           <Route path="/whitepaper" component={Whitepaper} />
           <Route path="/view-pdf" component={ViewPDF} />
           <Route path="/embedded-pdf" component={EmbeddedPDF} />
-          <Route path="/test-wallet" component={TestWallet} />
           <Route path="/disclaimer" component={Disclaimer} />
           <Route path="/terms" component={Terms} />
           <Route path="/privacy" component={Privacy} />

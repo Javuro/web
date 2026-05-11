@@ -41,7 +41,7 @@ export default function Privacy() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <Info className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <Info className="mr-2 h-6 w-6 text-emerald-300" />
                 1. Information We Collect
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -72,7 +72,7 @@ export default function Privacy() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <ShieldCheck className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <ShieldCheck className="mr-2 h-6 w-6 text-emerald-300" />
                 2. Purpose of Collection and Use
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -91,7 +91,7 @@ export default function Privacy() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <Clock className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <Clock className="mr-2 h-6 w-6 text-emerald-300" />
                 3. Retention and Deletion of Information
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -109,7 +109,7 @@ export default function Privacy() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <Share2 className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <Share2 className="mr-2 h-6 w-6 text-emerald-300" />
                 4. Data Sharing and Disclosure
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -126,13 +126,13 @@ export default function Privacy() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <UserCheck className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <UserCheck className="mr-2 h-6 w-6 text-emerald-300" />
                 5. User Rights
               </h2>
               <div className="space-y-4 text-muted-foreground">
                 <p>
                   You may request to access, correct, or delete your personal data.
-                  Requests should be sent to <a href="mailto:support@javuro.com" className="text-[#3A86FF] hover:underline">support@javuro.com</a>.
+                  Requests should be sent to <a href="mailto:support@javuro.com" className="text-emerald-300 hover:underline">support@javuro.com</a>.
                 </p>
                 <p>
                   We will respond to requests <span className="font-semibold">within the timeframe permitted by applicable law</span>, and may request additional verification before taking action.
@@ -147,7 +147,7 @@ export default function Privacy() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <Lock className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <Lock className="mr-2 h-6 w-6 text-emerald-300" />
                 6. Data Security Measures
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -168,7 +168,7 @@ export default function Privacy() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <Cookie className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <Cookie className="mr-2 h-6 w-6 text-emerald-300" />
                 7. Cookies and Analytics
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -183,7 +183,7 @@ export default function Privacy() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <Users className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <Users className="mr-2 h-6 w-6 text-emerald-300" />
                 8. Minors
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -198,7 +198,7 @@ export default function Privacy() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <Globe className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <Globe className="mr-2 h-6 w-6 text-emerald-300" />
                 9. Jurisdiction and Updates
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -214,14 +214,14 @@ export default function Privacy() {
           <Card>
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 flex items-center">
-                <Phone className="mr-2 h-6 w-6 text-[#3A86FF]" />
+                <Phone className="mr-2 h-6 w-6 text-emerald-300" />
                 10. Contact
               </h2>
               <div className="space-y-4 text-muted-foreground">
                 <p>If you have any questions or requests regarding this Privacy Policy, please contact:</p>
                 <p className="flex items-center mt-2">
-                  <Mail className="h-5 w-5 text-[#3A86FF] mr-2" />
-                  <a href="mailto:support@javuro.com" className="text-[#3A86FF] hover:underline">support@javuro.com</a>
+                  <Mail className="h-5 w-5 text-emerald-300 mr-2" />
+                  <a href="mailto:support@javuro.com" className="text-emerald-300 hover:underline">support@javuro.com</a>
                 </p>
                 <p className="mt-2">
                   Please allow up to <span className="font-semibold">30 business days</span> for a full response.

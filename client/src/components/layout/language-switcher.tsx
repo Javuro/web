@@ -14,7 +14,7 @@ export default function LanguageSwitcher() {
       variant="ghost"
       size="sm"
       onClick={toggleLanguage}
-      className="text-gray-400 hover:text-[#3A86FF]"
+      className="text-gray-400 hover:text-emerald-300"
     >
       {t(`language.${i18n.language === 'ko' ? 'en' : 'ko'}`)}
     </Button>
